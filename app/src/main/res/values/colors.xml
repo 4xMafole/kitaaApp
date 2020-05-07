@@ -8,4 +8,6 @@
     <color name="disabledButton">#885F02</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="main_background">#3A3939</color>
+    <color name="bluishColor">#2196F3</color>
+    <color name="greenishColor">#4CAF50</color>
 </resources>

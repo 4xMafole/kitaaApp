@@ -1,7 +1,6 @@
 package com.kitaa.startup;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,12 +14,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kitaa.R;
 import com.kitaa.startup.adapters.CategoryAdapter;
+import com.kitaa.startup.adapters.HorizontalScrollProductAdapter;
 import com.kitaa.startup.adapters.SliderAdapter;
 import com.kitaa.startup.models.CategoryModel;
+import com.kitaa.startup.models.HorizontalScrollProductModel;
 import com.kitaa.startup.models.SliderModel;
 
 import java.util.ArrayList;
@@ -53,6 +56,13 @@ public class HomeFragment extends Fragment
     List<CategoryModel> _categoryModelList;
     ///// Category fields
 
+    ///// Horizontal scroll product fields
+    private TextView _horizontalProductLayoutTitle;
+    private Button _horizontalProductLayoutButton;
+    private RecyclerView _horizontalProductRecyclerview;
+    private List<HorizontalScrollProductModel> _horizontalScrollProductModelList;
+    ///// Horizontal scroll product fields
+
 
     public HomeFragment()
     {
@@ -80,8 +90,41 @@ public class HomeFragment extends Fragment
         _stripAdContainer = _view.findViewById(R.id.strip_ad_container);
         _stripAdImage.setImageResource(R.drawable.strip_add);
 
+        /////Horizontal Scroll Product
+        _horizontalProductLayoutTitle = _view.findViewById(R.id.horizontal_scroll_layout_title);
+        _horizontalProductLayoutButton = _view.findViewById(R.id.horizontal_scroll_layout_button);
+        _horizontalProductRecyclerview = _view.findViewById(R.id.horizontal_scroll_layout_recyclerview);
+        prepareProductData();
+        /////Horizontal Scroll Product
+
 
         return _view;
+    }
+
+    private void prepareProductData()
+    {
+        productData();
+        HorizontalScrollProductAdapter _horizontalScrollProductAdapter = new HorizontalScrollProductAdapter(_horizontalScrollProductModelList);
+        LinearLayoutManager _layoutManager = new LinearLayoutManager(getContext());
+        _layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        _horizontalProductRecyclerview.setLayoutManager(_layoutManager);
+
+        _horizontalProductRecyclerview.setAdapter(_horizontalScrollProductAdapter);
+        _horizontalScrollProductAdapter.notifyDataSetChanged();
+    }
+
+    private void productData()
+    {
+        _horizontalScrollProductModelList = new ArrayList<HorizontalScrollProductModel>();
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone, "Techno S8", "2 Core Processors", "Tshs.700,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone2, "Huawei P20", "CBC 10-2 Processors", "Tshs.800,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone3, "Vivo 20T", "CBC 10-2 Processors", "Tshs.400,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone2, "Huawei P20", "CBC 10-2 Processors", "Tshs.500,000/="));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone, "Techno S8", "2 Core Processors", "Tshs.700,000/="));
     }
 
     @SuppressLint("ClickableViewAccessibility")

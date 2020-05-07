@@ -32,8 +32,6 @@ public class SliderAdapter extends PagerAdapter
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.slider_layout, container, false);
         ImageView banner = view.findViewById(R.id.banner_slider);
         banner.setClipToOutline(true);
-        ConstraintLayout bannerContainer = view.findViewById(R.id.banner_container);
-        bannerContainer.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(_sliderModelList.get(position).getBackgroundColor())));
         banner.setImageResource(_sliderModelList.get(position).getBanner());
         container.addView(view, 0);
         return view;

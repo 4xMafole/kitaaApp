@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Kitaa</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="close_button">close button</string>
+    <string name="email_address">email address</string>
+    <string name="password_hint">password (minimum 8 characters)</string>
+    <string name="logo">logo</string>
+    <string name="forgot_password">Forgot password ?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or">Or</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="fullname_hint">full name</string>
+    <string name="conform_password">conform password</string>
+
+    <!--    Validation Strings-->
+    <string name="unmatched_passwords">password doesn\'t match!</string>
+    <string name="invalid_email">invalid email!</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="check_your_email_inbox">* Recovery email sent successfully! Check your inbox.</string>
+    <string name="error_internet_connection">Check your internet connection!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="search">search</string>
+    <string name="cart">cart</string>
+    <string name="notification">notification</string>
+    <string name="not_signed_in">Not Signed In</string>
+    <string name="profile">Profile</string>
+    <string name="rewards">Rewards</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="orders">Orders</string>
+    <string name="mall">Mall</string>
+    <string name="log_out">Log Out</string>
+    <string name="open_navigation_drawer">Open navigation drawer</string>
+    <string name="close_navigation_drawer">Close navigation drawer</string>
+    <string name="add_profile">add profile</string>
+    <string name="home_appliances">Home Appliances</string>
+    <string name="icon">icon</string>
+    <string name="banner_slider">banner slider</string>
+    <string name="strip_ad_banner">strip_ad_banner</string>
+</resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784163928429",
+    "firebase_url": "https://kitaa-startup.firebaseio.com",
+    "project_id": "kitaa-startup",
+    "storage_bucket": "kitaa-startup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784163928429:android:2ed2a0c4e0b5fb35f4c264",
+        "android_client_info": {
+          "package_name": "com.kitaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784163928429-999110mssjmv1pbplnpm93uf20v1qfoo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH1Bvq6PSrxGp30bYUBZcCZJHqiilC5aU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784163928429-999110mssjmv1pbplnpm93uf20v1qfoo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

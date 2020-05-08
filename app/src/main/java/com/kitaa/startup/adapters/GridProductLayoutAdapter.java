@@ -1,0 +1,74 @@
+package com.kitaa.startup.adapters;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.kitaa.R;
+import com.kitaa.startup.models.HorizontalScrollProductModel;
+
+import java.util.List;
+
+public class GridProductLayoutAdapter extends BaseAdapter
+{
+    private List<HorizontalScrollProductModel> _horizontalScrollProductModelList;
+
+    public GridProductLayoutAdapter(List<HorizontalScrollProductModel> horizontalScrollProductModelList)
+    {
+        _horizontalScrollProductModelList = horizontalScrollProductModelList;
+    }
+
+    @Override
+    public int getCount()
+    {
+        return 4;
+    }
+
+    @Override
+    public Object getItem(int position)
+    {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position)
+    {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        View _view;
+        ImageView productPhoto;
+        TextView productTitle;
+        TextView productDescription;
+        TextView productPrice;
+
+        if(convertView == null)
+        {
+            _view = LayoutInflater.from(parent.getContext()).inflate(R.layout.horizontal_scroll_item, null);
+            _view.setElevation(0);
+
+            productPhoto = _view.findViewById(R.id.h_s_product_photo);
+            productTitle = _view.findViewById(R.id.h_s_product_title);
+            productDescription = _view.findViewById(R.id.h_s_product_description);
+            productPrice = _view.findViewById(R.id.h_s_product_price);
+
+            productPhoto.setImageResource(_horizontalScrollProductModelList.get(position).getProductPhoto());
+            productTitle.setText(_horizontalScrollProductModelList.get(position).getProductTitle());
+            productDescription.setText(_horizontalScrollProductModelList.get(position).getProductDescription());
+            productPrice.setText(_horizontalScrollProductModelList.get(position).getProductPrice());
+
+        }
+        else
+        {
+            _view = convertView;
+        }
+
+        return _view;
+    }
+}

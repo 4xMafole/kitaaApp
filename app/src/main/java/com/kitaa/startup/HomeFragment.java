@@ -15,11 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kitaa.R;
 import com.kitaa.startup.adapters.CategoryAdapter;
+import com.kitaa.startup.adapters.GridProductLayoutAdapter;
 import com.kitaa.startup.adapters.HorizontalScrollProductAdapter;
 import com.kitaa.startup.adapters.SliderAdapter;
 import com.kitaa.startup.models.CategoryModel;
@@ -63,6 +65,12 @@ public class HomeFragment extends Fragment
     private List<HorizontalScrollProductModel> _horizontalScrollProductModelList;
     ///// Horizontal scroll product fields
 
+    /////Grid product fields
+    private TextView _gridLayoutTitle;
+    private Button _gridLayoutButton;
+    private GridView _gridLayoutGridview;
+    /////Grid product fields
+
 
     public HomeFragment()
     {
@@ -86,9 +94,11 @@ public class HomeFragment extends Fragment
         _bannerSlider = _view.findViewById(R.id.banner_slider_view_pager);
         prepareBannerData();
 
+        /////Strip advert banner
         _stripAdImage = _view.findViewById(R.id.strip_ad_banner);
         _stripAdContainer = _view.findViewById(R.id.strip_ad_container);
         _stripAdImage.setImageResource(R.drawable.strip_add);
+        /////Strip advert banner
 
         /////Horizontal Scroll Product
         _horizontalProductLayoutTitle = _view.findViewById(R.id.horizontal_scroll_layout_title);
@@ -96,6 +106,14 @@ public class HomeFragment extends Fragment
         _horizontalProductRecyclerview = _view.findViewById(R.id.horizontal_scroll_layout_recyclerview);
         prepareProductData();
         /////Horizontal Scroll Product
+
+        /////Grid View Product
+        _gridLayoutTitle = _view.findViewById(R.id.grid_product_layout_title);
+        _gridLayoutButton = _view.findViewById(R.id.grid_product_layout_button);
+        _gridLayoutGridview = _view.findViewById(R.id.grid_product_layout_gridview);
+
+        _gridLayoutGridview.setAdapter(new GridProductLayoutAdapter(_horizontalScrollProductModelList));
+        /////Grid View Product
 
 
         return _view;

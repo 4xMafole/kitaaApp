@@ -22,9 +22,11 @@ import android.widget.TextView;
 import com.kitaa.R;
 import com.kitaa.startup.adapters.CategoryAdapter;
 import com.kitaa.startup.adapters.GridProductLayoutAdapter;
+import com.kitaa.startup.adapters.HomePageAdapter;
 import com.kitaa.startup.adapters.HorizontalScrollProductAdapter;
 import com.kitaa.startup.adapters.SliderAdapter;
 import com.kitaa.startup.models.CategoryModel;
+import com.kitaa.startup.models.HomePageModel;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
 import com.kitaa.startup.models.SliderModel;
 
@@ -71,6 +73,9 @@ public class HomeFragment extends Fragment
     private GridView _gridLayoutGridview;
     /////Grid product fields
 
+    /////Home Page fields
+    private List<HomePageModel> _homePageModelList;
+    /////Home Page fields
 
     public HomeFragment()
     {
@@ -105,6 +110,7 @@ public class HomeFragment extends Fragment
         _horizontalProductLayoutButton = _view.findViewById(R.id.horizontal_scroll_layout_button);
         _horizontalProductRecyclerview = _view.findViewById(R.id.horizontal_scroll_layout_recyclerview);
         prepareProductData();
+
         /////Horizontal Scroll Product
 
         /////Grid View Product
@@ -115,13 +121,37 @@ public class HomeFragment extends Fragment
         _gridLayoutGridview.setAdapter(new GridProductLayoutAdapter(_horizontalScrollProductModelList));
         /////Grid View Product
 
+        /////Testing
+        RecyclerView _testing = _view.findViewById(R.id.testing);
+        LinearLayoutManager _linearLayoutManager = new LinearLayoutManager(getContext());
+        _linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        _testing.setLayoutManager(_linearLayoutManager);
+        prepareHomePageData();
+
+        HomePageAdapter _homePageAdapter = new HomePageAdapter(_homePageModelList);
+        _testing.setAdapter(_homePageAdapter);
+        _homePageAdapter.notifyDataSetChanged();
+        /////Testing
+
 
         return _view;
     }
 
+    private void prepareHomePageData()
+    {
+        _homePageModelList = new ArrayList<HomePageModel>();
+        _homePageModelList.add(new HomePageModel(0, _sliderModelList));
+        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
+        _homePageModelList.add(new HomePageModel(2, "# Latest Electronics", _horizontalScrollProductModelList));
+        _homePageModelList.add(new HomePageModel(3, "New In Town", _horizontalScrollProductModelList));
+        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
+        _homePageModelList.add(new HomePageModel(3, "# Trending", _horizontalScrollProductModelList));
+        _homePageModelList.add(new HomePageModel(2, "Deals of the Day", _horizontalScrollProductModelList));
+    }
+
     private void prepareProductData()
     {
-        productData();
+        horizontalProductData();
         HorizontalScrollProductAdapter _horizontalScrollProductAdapter = new HorizontalScrollProductAdapter(_horizontalScrollProductModelList);
         LinearLayoutManager _layoutManager = new LinearLayoutManager(getContext());
         _layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -131,7 +161,7 @@ public class HomeFragment extends Fragment
         _horizontalScrollProductAdapter.notifyDataSetChanged();
     }
 
-    private void productData()
+    private void horizontalProductData()
     {
         _horizontalScrollProductModelList = new ArrayList<HorizontalScrollProductModel>();
         _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
@@ -141,7 +171,6 @@ public class HomeFragment extends Fragment
         _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone2, "Huawei P20", "CBC 10-2 Processors", "Tshs.800,000/="));
         _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone3, "Vivo 20T", "CBC 10-2 Processors", "Tshs.400,000/="));
         _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone2, "Huawei P20", "CBC 10-2 Processors", "Tshs.500,000/="));
         _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone, "Techno S8", "2 Core Processors", "Tshs.700,000/="));
     }
 

@@ -57,4 +57,5 @@
     <string name="h_s_product_description">SD 234 Processor</string>
     <string name="h_s_product_title">Iphone X</string>
     <string name="title_activity_main">Home</string>
+    <string name="name_placeholder">John John Doe</string>
 </resources>

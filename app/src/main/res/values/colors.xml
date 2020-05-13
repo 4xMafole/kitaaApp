@@ -10,4 +10,6 @@
     <color name="main_background">#3A3939</color>
     <color name="bluishColor">#2196F3</color>
     <color name="greenishColor">#4CAF50</color>
+    <color name="partialBlue">#7D98AE</color>
+    <color name="partialDisabledButton">#E6CE97</color>
 </resources>

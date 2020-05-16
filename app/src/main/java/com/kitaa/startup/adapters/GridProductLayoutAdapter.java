@@ -1,5 +1,6 @@
 package com.kitaa.startup.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kitaa.R;
+import com.kitaa.startup.ProductDetailsActivity;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(int position, View convertView, final ViewGroup parent)
     {
         View _view;
         ImageView productPhoto;
@@ -52,6 +54,17 @@ public class GridProductLayoutAdapter extends BaseAdapter
         {
             _view = LayoutInflater.from(parent.getContext()).inflate(R.layout.horizontal_scroll_item, null);
             _view.setElevation(0);
+
+            _view.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent productDetailsIntent = new Intent(parent.getContext(), ProductDetailsActivity.class);
+                    parent.getContext().startActivity(productDetailsIntent);
+
+                }
+            });
 
             productPhoto = _view.findViewById(R.id.h_s_product_photo);
             productTitle = _view.findViewById(R.id.h_s_product_title);

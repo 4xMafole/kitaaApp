@@ -36,8 +36,8 @@ public class ProductSpecificationAdapter extends RecyclerView.Adapter<ProductSpe
     {
         String featureTitle = _productSpecificationModelList.get(position).getFeatureName();
         String featureDetail = _productSpecificationModelList.get(position).getFeatureValue();
-        holder.setFeatures(featureTitle, featureDetail);
 
+        holder.setFeatures(featureTitle, featureDetail);
     }
 
     @Override

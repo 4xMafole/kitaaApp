@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             _currentFragment = fragmentNo;
             FragmentTransaction _fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            _fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
             _fragmentTransaction.replace(_frameLayout.getId(), fragment);
             _fragmentTransaction.commit();
         }

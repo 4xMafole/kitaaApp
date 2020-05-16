@@ -16,6 +16,7 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.kitaa.R;
+import com.kitaa.startup.adapters.ProductDetailsAdapter;
 import com.kitaa.startup.adapters.ProductImageAdapter;
 
 import java.util.ArrayList;
@@ -25,11 +26,17 @@ import java.util.Objects;
 public class ProductDetailsActivity extends AppCompatActivity
 {
 
-    private static boolean ALREADY_IN_WISHLIST = false;
+    public static boolean ALREADY_IN_WISHLIST = false;
     private Toolbar _toolbar;
     private ViewPager _productImagesViewPager;
     private TabLayout _viewPagerIndicator;
     private FloatingActionButton _addWishlistButton;
+
+    private ViewPager productDetailsViewPager;
+    private TabLayout productDetailsTabLayout;
+
+    /////ProductImages
+    private List<Integer> _productImages;
 
 
     @Override
@@ -46,18 +53,56 @@ public class ProductDetailsActivity extends AppCompatActivity
         _productImagesViewPager = findViewById(R.id.products_images_viewpager);
         _viewPagerIndicator = findViewById(R.id.viewpager_indicator);
         _addWishlistButton = findViewById(R.id.add_to_wishlist_btn);
+        productDetailsTabLayout = findViewById(R.id.product_details_tablayout);
+        productDetailsViewPager = findViewById(R.id.product_details_viewpager);
 
-        List<Integer> _productImages = new ArrayList<>();
+        prepareProductImageData();
+        toggleWishlist();
+
+        productDetailsViewPager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(), productDetailsTabLayout.getTabCount()));
+
+        productDetailsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(productDetailsTabLayout));
+        productDetailsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+        {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab)
+            {
+                productDetailsViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab)
+            {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab)
+            {
+
+            }
+        });
+    }
+
+    private void prepareProductImageData()
+    {
+        productImageDataList();
+        ProductImageAdapter _productImageAdapter = new ProductImageAdapter(_productImages);
+        _productImagesViewPager.setAdapter(_productImageAdapter);
+        _viewPagerIndicator.setupWithViewPager(_productImagesViewPager, true);
+    }
+
+    private void productImageDataList()
+    {
+        _productImages = new ArrayList<>();
         _productImages.add(R.drawable.phone);
         _productImages.add(R.drawable.phone2);
         _productImages.add(R.drawable.banner6);
         _productImages.add(R.drawable.banner5);
+    }
 
-        ProductImageAdapter _productImageAdapter = new ProductImageAdapter(_productImages);
-        _productImagesViewPager.setAdapter(_productImageAdapter);
-
-        _viewPagerIndicator.setupWithViewPager(_productImagesViewPager, true);
-
+    private void toggleWishlist()
+    {
         _addWishlistButton.setOnClickListener(new View.OnClickListener()
         {
             @SuppressLint("ResourceAsColor")
@@ -76,14 +121,14 @@ public class ProductDetailsActivity extends AppCompatActivity
                 }
             }
         });
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search_and_cart_icon, menu);
+        getMenuInflater().inflate(R.menu.search_and_wishlist_icon, menu);
         return true;
     }
 
@@ -102,7 +147,7 @@ public class ProductDetailsActivity extends AppCompatActivity
             //todo : search
             return true;
         }
-        else if(id == R.id.main_cart_icon)
+        else if(id == R.id.main_wishlist_icon)
         {
             //todo : shopping cart
             return true;

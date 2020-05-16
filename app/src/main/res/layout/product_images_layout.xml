@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Iphone X Prius 1.8 Z8 CVT "
+                android:text="@string/product_title_placeholder"
                 android:textColor="@color/bluishColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="30 minutes"
+                android:text="@string/time_placeholder"
                 android:textColor="@color/partialBlue"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/product_title"
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="Dar Es Salaam"
+                android:text="@string/region_placeholder"
                 android:textColor="@color/greenishColor"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/product_upload_time"
@@ -108,11 +108,11 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/product_price"
+                android:id="@+id/product_price_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Tshs.1,999,000"
+                android:text="@string/money_placeholder"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -121,38 +121,38 @@
                 tools:ignore="HardcodedText" />
 
             <View
-                android:id="@+id/divider3"
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/textHint"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_price" />
+                app:layout_constraintTop_toBottomOf="@+id/product_price_display" />
 
             <ImageView
                 android:id="@+id/product_owner_call"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/product_price"
-                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                app:layout_constraintStart_toStartOf="@+id/product_price_display"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
                 app:srcCompat="@drawable/ic_call_24dp"
                 tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/product_owner_chat"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/product_map"
-                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
                 app:srcCompat="@drawable/ic_chat_bubble_24dp"
                 tools:ignore="ContentDescription" />
 
@@ -165,7 +165,7 @@
                 android:textColor="@color/partialBlue"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/product_price"
+                app:layout_constraintBottom_toBottomOf="@+id/product_price_display"
                 app:layout_constraintEnd_toEndOf="@+id/product_map"
                 app:layout_constraintStart_toStartOf="@+id/map_icon"
                 app:layout_constraintTop_toBottomOf="@+id/product_map" />

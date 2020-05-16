@@ -19,11 +19,12 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
+                android:id="@+id/actionBar_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/logo"
-                android:contentDescription="@string/logo" />
+                android:contentDescription="@string/logo"
+                app:srcCompat="@drawable/logo" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

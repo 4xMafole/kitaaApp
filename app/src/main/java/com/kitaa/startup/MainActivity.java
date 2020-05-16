@@ -1,20 +1,17 @@
 package com.kitaa.startup;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.kitaa.R;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -28,9 +25,13 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
+    public static final int HOME_FRAGMENT = 0;
+    public static final int WISHLIST_FRAGMENT = 1;
     private NavigationView _navigationView;
     private Toolbar _toolbar;
     private FrameLayout _frameLayout;
+    private static int _currentFragment = -1;
+    private ImageView _actionBarLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(_toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        _actionBarLogo = findViewById(R.id.actionBar_logo);
+
         _navigationView = findViewById(R.id.nav_view);
         _navigationView.setNavigationItemSelectedListener(this);
         _navigationView.getMenu().getItem(0).setChecked(true);
@@ -52,14 +55,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         _toggle.syncState();
 
         _frameLayout = findViewById(R.id.main_framelayout);
-        setFragment(new HomeFragment());
+        setFragment(new HomeFragment(), HOME_FRAGMENT);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if(_currentFragment == HOME_FRAGMENT)
+        {
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
         return true;
     }
 
@@ -78,39 +85,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //todo : notification
             return true;
         }
-        else if(id == R.id.main_cart_icon)
+        else if(id == R.id.main_wishlist_icon)
         {
-            //todo : shopping cart
+            //todo : Add wishlist instead of add to cart
+            gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void gotoFragment(String title, Fragment fragment, int fragmentNo)
+    {
+        _actionBarLogo.setVisibility(View.GONE);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(title);
+        invalidateOptionsMenu();
+        setFragment(fragment, fragmentNo);
+
+        //todo: Change the item number since in the near future it will change.
+        if(fragmentNo == WISHLIST_FRAGMENT)
+        {
+            _navigationView.getMenu().getItem(2).setChecked(true);
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
         int id = item.getItemId();
 
-        if(id == R.id.main_mall)
+        if(id == R.id.main_home)
         {
-            Toast.makeText(this, "Mall fragment", Toast.LENGTH_SHORT).show();
+            _actionBarLogo.setVisibility(View.VISIBLE);
+            invalidateOptionsMenu();
+            setFragment(new HomeFragment(), HOME_FRAGMENT);
         }
-         else if(id == R.id.main_orders)
+        else if(id == R.id.main_ads)
          {
              Toast.makeText(this, "Order fragment", Toast.LENGTH_SHORT).show();
          }
-         else if(id == R.id.main_shopping_cart)
-         {
-             Toast.makeText(this, "Cart fragment", Toast.LENGTH_SHORT).show();
-         }
          else if(id == R.id.main_wishlist)
          {
-             Toast.makeText(this, "Wishlist fragment", Toast.LENGTH_SHORT).show();
-         }
-         else if(id == R.id.main_rewards)
-         {
-             Toast.makeText(this, "Rewards fragment", Toast.LENGTH_SHORT).show();
+             gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
          }
          else if(id == R.id.main_profile)
          {
@@ -125,11 +141,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void setFragment(Fragment fragment)
+    @Override
+    public void onBackPressed()
     {
-        FragmentTransaction _fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        _fragmentTransaction.replace(_frameLayout.getId(), fragment);
-        _fragmentTransaction.commit();
+        DrawerLayout _drawerLayout = findViewById(R.id.drawer_layout);
+        if(_drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            _drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            if(_currentFragment == HOME_FRAGMENT)
+            {
+                super.onBackPressed();
+            }
+            else
+            {
+                _actionBarLogo.setVisibility(View.VISIBLE);
+                invalidateOptionsMenu();
+                setFragment(new HomeFragment(), HOME_FRAGMENT);
+                _navigationView.getMenu().getItem(0).setChecked(true);
+
+            }
+        }
+    }
+
+    private void setFragment(Fragment fragment, int fragmentNo)
+    {
+        if(fragmentNo != _currentFragment)
+        {
+            _currentFragment = fragmentNo;
+            FragmentTransaction _fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            _fragmentTransaction.replace(_frameLayout.getId(), fragment);
+            _fragmentTransaction.commit();
+        }
 
     }
 

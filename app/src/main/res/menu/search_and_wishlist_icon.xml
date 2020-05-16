@@ -14,7 +14,7 @@
         android:id="@+id/main_wishlist_icon"
         android:icon="@drawable/ic_wishlist_main_24dp"
         android:orderInCategory="100"
-        android:title="@string/cart"
+        android:title="@string/wishlist"
         app:showAsAction="always" />
 
 </menu>

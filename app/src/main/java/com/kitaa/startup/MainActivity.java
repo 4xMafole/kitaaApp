@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 {
 
     public static final int HOME_FRAGMENT = 0;
-    public static final int WISHLIST_FRAGMENT = 1;
+    public static final int WISHLIST_FRAGMENT = 2;
+    public static final int ADS_FRAGMENT = 1;
     private NavigationView _navigationView;
     private Toolbar _toolbar;
     private FrameLayout _frameLayout;
@@ -87,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.main_wishlist_icon)
         {
-            //todo : Add wishlist instead of add to cart
             gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
             return true;
         }
@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         invalidateOptionsMenu();
         setFragment(fragment, fragmentNo);
 
-        //todo: Change the item number since in the near future it will change.
         if(fragmentNo == WISHLIST_FRAGMENT)
         {
             _navigationView.getMenu().getItem(2).setChecked(true);
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.main_ads)
          {
-             Toast.makeText(this, "Order fragment", Toast.LENGTH_SHORT).show();
+             gotoFragment("My Ads", new AdsFragment(), ADS_FRAGMENT);
          }
          else if(id == R.id.main_wishlist)
          {

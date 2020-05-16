@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/product_card_holder"
+                android:layout_width="140dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:clipChildren="true"
+                android:clipToPadding="true"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/product_item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="clip_horizontal|clip_vertical"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/banner5"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/wishlist_item_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:tint="@color/partialDisabledButton"
+                app:backgroundTint="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/product_card_holder"
+                app:rippleColor="@color/colorAccent"
+                app:srcCompat="@drawable/ic_wishlist_black_24dp"
+                tools:ignore="KeyboardInaccessibleWidget" />
+
+            <TextView
+                android:id="@+id/product_title_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:maxLength="26"
+                android:text="@string/product_title_placeholder"
+                android:textAlignment="center"
+                android:textColor="@color/bluishColor"
+                app:layout_constraintStart_toEndOf="@+id/product_card_holder"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/product_price_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:maxLength="18"
+                android:text="@string/money_placeholder"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/product_card_holder"
+                app:layout_constraintTop_toBottomOf="@+id/product_title_display" />
+
+            <TextView
+                android:id="@+id/product_upload_time_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/time_placeholder"
+                android:textColor="@color/partialBlue"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/product_card_holder"
+                app:layout_constraintStart_toEndOf="@+id/product_card_holder"
+                app:layout_constraintTop_toBottomOf="@+id/product_price_display" />
+
+            <TextView
+                android:id="@+id/product_region_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/region_placeholder"
+                android:textColor="@color/greenishColor"
+                app:layout_constraintBottom_toBottomOf="@+id/product_card_holder"
+                app:layout_constraintEnd_toEndOf="@+id/wishlist_item_button"
+                app:layout_constraintTop_toBottomOf="@+id/product_price_display" />
+
+            <ImageView
+                android:id="@+id/location_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/product_region_display"
+                app:layout_constraintEnd_toStartOf="@+id/product_region_display"
+                app:srcCompat="@drawable/ic_place_black_24dp"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_card_holder" />
+
+            <ImageView
+                android:id="@+id/product_owner_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:srcCompat="@drawable/ic_call_24dp"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/product_owner_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:srcCompat="@drawable/ic_chat_bubble_24dp"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int HOME_FRAGMENT = 0;
     public static final int WISHLIST_FRAGMENT = 2;
     public static final int ADS_FRAGMENT = 1;
+    public static final int ACCOUNT_FRAGMENT = 4;
     private NavigationView _navigationView;
     private Toolbar _toolbar;
     private FrameLayout _frameLayout;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          }
          else if(id == R.id.main_profile)
          {
-             Toast.makeText(this, "Profile fragment", Toast.LENGTH_SHORT).show();
+             gotoFragment("My Profile", new AccountFragment(), ACCOUNT_FRAGMENT);
          }
          else if(id == R.id.main_logout)
         {

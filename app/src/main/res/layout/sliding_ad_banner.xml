@@ -10,6 +10,7 @@
         android:id="@+id/banner_slider_view_pager"
         android:layout_width="0dp"
         android:layout_height="230dp"
+        android:background="@color/colorPrimaryDark"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="8dp"

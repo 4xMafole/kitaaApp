@@ -68,5 +68,10 @@
     <string name="money_placeholder">Tshs.1,999,000</string>
     <string name="time_placeholder">30 minutes</string>
     <string name="region_placeholder">Dar Es Salaam</string>
+    <string name="email_placeholder">john.j.doe@gmail.com</string>
+    <string name="ads_status">Current Ads Status</string>
+    <string name="my_address">My Info.</string>
+    <string name="phone_number_placeholder">+225709023909</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>

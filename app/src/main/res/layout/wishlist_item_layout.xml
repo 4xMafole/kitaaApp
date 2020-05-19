@@ -106,10 +106,11 @@
                 android:id="@+id/product_region_display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="@string/region_placeholder"
                 android:textColor="@color/greenishColor"
                 app:layout_constraintBottom_toBottomOf="@+id/product_card_holder"
-                app:layout_constraintEnd_toEndOf="@+id/wishlist_item_button"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_price_display" />
 
             <ImageView

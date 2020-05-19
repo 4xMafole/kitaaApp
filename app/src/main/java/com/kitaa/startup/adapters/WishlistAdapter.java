@@ -1,6 +1,7 @@
 package com.kitaa.startup.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kitaa.R;
+import com.kitaa.startup.ProductDetailsActivity;
 import com.kitaa.startup.models.WishlistModel;
 
 import java.util.List;
@@ -22,11 +24,14 @@ import java.util.List;
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>
 {
     private List<WishlistModel> _wishlistModelList;
+    private boolean wishlist;
 
-    public WishlistAdapter(List<WishlistModel> wishlistModelList)
+    public WishlistAdapter(List<WishlistModel> wishlistModelList, boolean wishlist)
     {
         _wishlistModelList = wishlistModelList;
+        this.wishlist = wishlist;
     }
+
 
     @NonNull
     @Override
@@ -90,9 +95,32 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             productUploadTimeDisplay.setText(uploadTime);
             productRegionDisplay.setText(region);
 
-            toggleWishlistButton();
+            if(wishlist)
+            {
+                wishlistItemButton.setVisibility(View.VISIBLE);
+                toggleWishlistButton();
+            }
+            else
+            {
+                wishlistItemButton.setVisibility(View.GONE);
+            }
+
+            lookProduct();
             contactOwner();
 
+        }
+
+        private void lookProduct()
+        {
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent showProductIntent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+                    itemView.getContext().startActivity(showProductIntent);
+                }
+            });
         }
 
         private void contactOwner()

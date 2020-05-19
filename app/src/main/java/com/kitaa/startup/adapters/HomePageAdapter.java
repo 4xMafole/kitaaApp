@@ -1,6 +1,7 @@
 package com.kitaa.startup.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kitaa.R;
+import com.kitaa.startup.ViewAllActivity;
 import com.kitaa.startup.models.HomePageModel;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
 import com.kitaa.startup.models.SliderModel;
@@ -294,7 +296,16 @@ public class HomePageAdapter extends RecyclerView.Adapter
             if(horizontalScrollProductModelList.size() > 8)
             {
                 _horizontalProductLayoutButton.setVisibility(View.VISIBLE);
-
+                _horizontalProductLayoutButton.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
+                        viewAllIntent.putExtra("layout_code", 0);
+                        itemView.getContext().startActivity(viewAllIntent);
+                    }
+                });
             }
             else
             {
@@ -329,6 +340,16 @@ public class HomePageAdapter extends RecyclerView.Adapter
         {
             _gridLayoutTitle.setText(title);
             _gridLayoutGridview.setAdapter(new GridProductLayoutAdapter(horizontalScrollProductModelList));
+            _gridLayoutButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
+                    viewAllIntent.putExtra("layout_code", 1);
+                    itemView.getContext().startActivity(viewAllIntent);
+                }
+            });
         }
 
     }

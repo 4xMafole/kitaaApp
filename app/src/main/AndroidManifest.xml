@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".startup.ProductDetailsActivity"></activity>
+        <activity android:name=".startup.ViewAllActivity"></activity>
+        <activity android:name=".startup.ProductDetailsActivity" />
         <activity android:name=".startup.CategoryActivity" />
         <activity
             android:name=".startup.MainActivity"

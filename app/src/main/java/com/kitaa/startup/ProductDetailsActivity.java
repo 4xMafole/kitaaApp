@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.kitaa.startup.adapters.ProductImageAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.kitaa.startup.MainActivity.SHOW_WISHLIST;
 
 public class ProductDetailsActivity extends AppCompatActivity
 {
@@ -149,7 +152,9 @@ public class ProductDetailsActivity extends AppCompatActivity
         }
         else if(id == R.id.main_wishlist_icon)
         {
-            //todo : shopping cart
+            Intent wishlistIntent = new Intent(ProductDetailsActivity.this, MainActivity.class);
+            SHOW_WISHLIST = true;
+            startActivity(wishlistIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

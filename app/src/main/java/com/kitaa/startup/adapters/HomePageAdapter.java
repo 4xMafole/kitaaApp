@@ -128,8 +128,9 @@ public class HomePageAdapter extends RecyclerView.Adapter
         final private long PERIOD_TIME = 3000;
         /////Banner fields
         private ViewPager _bannerSliderViewPager;
-        private int _currentPage = 1;
+        private int _currentPage;
         private Timer _timer;
+        private List<SliderModel> _sliderModelListArrange;
         /////Banner fields
 
         public BannerSliderViewHolder(@NonNull View itemView)
@@ -142,8 +143,20 @@ public class HomePageAdapter extends RecyclerView.Adapter
         @SuppressLint("ClickableViewAccessibility")
         private void setBannerSliderViewPager(final List<SliderModel> _sliderModelList)
         {
-            bannerData(_sliderModelList);
-            SliderAdapter _sliderAdapter = new SliderAdapter(_sliderModelList);
+            _currentPage = 1;
+
+            if(_timer != null)
+            {
+                _timer.cancel();
+            }
+
+            _sliderModelListArrange = new ArrayList<>();
+            for(int x = 0; x < _sliderModelList.size(); x++)
+            {
+                _sliderModelListArrange.add(x, _sliderModelList.get(x));
+            }
+
+            SliderAdapter _sliderAdapter = new SliderAdapter(_sliderModelListArrange);
             _bannerSliderViewPager.setAdapter(_sliderAdapter);
             _bannerSliderViewPager.setClipToPadding(false);
             _bannerSliderViewPager.setPageMargin(20);
@@ -168,50 +181,29 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 {
                     if(state == ViewPager.SCROLL_STATE_IDLE)
                     {
-                        pageLooper(_sliderModelList);
+                        pageLooper(_sliderModelListArrange);
                     }
                 }
             };
 
             _bannerSliderViewPager.addOnPageChangeListener(_onPageChangeListener);
-            startBannerSlideShow(_sliderModelList);
+            startBannerSlideShow(_sliderModelListArrange);
 
             _bannerSliderViewPager.setOnTouchListener(new View.OnTouchListener()
             {
                 @Override
                 public boolean onTouch(View v, MotionEvent event)
                 {
-                    pageLooper(_sliderModelList);
+                    pageLooper(_sliderModelListArrange);
                     stopBannerSlideShow();
                     if(event.getAction() == MotionEvent.ACTION_UP)
                     {
-                        startBannerSlideShow(_sliderModelList);
+                        startBannerSlideShow(_sliderModelListArrange);
                     }
                     return false;
                 }
             });
 
-        }
-
-        private void bannerData(List<SliderModel> _sliderModelList)
-        {
-            ///todo: Admin adds user's own banner to promote a work public
-            _sliderModelList = new ArrayList<SliderModel>();
-
-            _sliderModelList.add(new SliderModel(R.drawable.banner7));
-            _sliderModelList.add(new SliderModel(R.drawable.banner1));
-
-            _sliderModelList.add(new SliderModel(R.drawable.banner2));
-            _sliderModelList.add(new SliderModel(R.drawable.banner));
-            _sliderModelList.add(new SliderModel(R.drawable.banner4));
-            _sliderModelList.add(new SliderModel(R.drawable.banner5));
-            _sliderModelList.add(new SliderModel(R.drawable.banner6));
-            _sliderModelList.add(new SliderModel(R.drawable.banner10));
-            _sliderModelList.add(new SliderModel(R.drawable.banner9));
-            _sliderModelList.add(new SliderModel(R.drawable.banner11));
-
-            _sliderModelList.add(new SliderModel(R.drawable.banner7));
-            _sliderModelList.add(new SliderModel(R.drawable.banner1));
         }
 
         private void pageLooper(List<SliderModel> _sliderModelList)

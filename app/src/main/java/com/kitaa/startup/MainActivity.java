@@ -1,5 +1,6 @@
 package com.kitaa.startup;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -29,12 +30,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int WISHLIST_FRAGMENT = 2;
     public static final int ADS_FRAGMENT = 1;
     public static final int ACCOUNT_FRAGMENT = 4;
+    public static Boolean SHOW_WISHLIST = false;
+
     private NavigationView _navigationView;
     private Toolbar _toolbar;
     private FrameLayout _frameLayout;
-    private static int _currentFragment = -1;
+    private int _currentFragment = -1;
     private ImageView _actionBarLogo;
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,12 +56,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         _navigationView.getMenu().getItem(0).setChecked(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle _toggle =  new ActionBarDrawerToggle(this, drawer, _toolbar, 0, 0);
-        drawer.addDrawerListener(_toggle);
-        _toggle.syncState();
 
         _frameLayout = findViewById(R.id.main_framelayout);
-        setFragment(new HomeFragment(), HOME_FRAGMENT);
+
+        if(SHOW_WISHLIST)
+        {
+            drawer.setDrawerLockMode(1);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            gotoFragment("My Wishlist", new WishlistFragment(), -2);
+        }
+        else
+        {
+            ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(this, drawer, _toolbar, 0, 0);
+            drawer.addDrawerListener(_toggle);
+            _toggle.syncState();
+            setFragment(new HomeFragment(), HOME_FRAGMENT);
+        }
     }
 
     @Override
@@ -90,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if(id == R.id.main_wishlist_icon)
         {
             gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
+            return true;
+        }
+        else if(id == android.R.id.home)
+        {
+            SHOW_WISHLIST = false;
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,11 +178,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             else
             {
-                _actionBarLogo.setVisibility(View.VISIBLE);
-                invalidateOptionsMenu();
-                setFragment(new HomeFragment(), HOME_FRAGMENT);
-                _navigationView.getMenu().getItem(0).setChecked(true);
-
+                if(SHOW_WISHLIST)
+                {
+                    SHOW_WISHLIST = false;
+                    finish();
+                }
+                else
+                {
+                    _actionBarLogo.setVisibility(View.VISIBLE);
+                    invalidateOptionsMenu();
+                    setFragment(new HomeFragment(), HOME_FRAGMENT);
+                    _navigationView.getMenu().getItem(0).setChecked(true);
+                }
             }
         }
     }

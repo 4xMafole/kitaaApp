@@ -1,16 +1,21 @@
 package com.kitaa.startup;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.kitaa.R;
+import com.kitaa.startup.auth.RegisterActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
+
+import static com.kitaa.startup.auth.RegisterActivity._setSignUpFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -103,7 +110,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.main_wishlist_icon)
         {
-            gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
+            final Dialog signInDialog = new Dialog(MainActivity.this);
+            signInDialog.setContentView(R.layout.sign_in_dialog);
+            signInDialog.setCancelable(true);
+            Objects.requireNonNull(signInDialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            Button dialogSignInDialogBtn = signInDialog.findViewById(R.id.sign_in_dialog_btn);
+            Button dialogSignUpDialogBtn = signInDialog.findViewById(R.id.sign_up_dialog_btn);
+            final Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+
+            dialogSignInDialogBtn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    signInDialog.dismiss();
+                    _setSignUpFragment = false;
+                    startActivity(registerIntent);
+                }
+            });
+
+            dialogSignUpDialogBtn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    signInDialog.dismiss();
+                    _setSignUpFragment = true;
+                    startActivity(registerIntent);
+                }
+            });
+
+            signInDialog.show();
+
+//            gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
             return true;
         }
         else if(id == android.R.id.home)

@@ -73,5 +73,6 @@
     <string name="my_address">My Info.</string>
     <string name="phone_number_placeholder">+225709023909</string>
     <string name="sign_out">Sign Out</string>
+    <string name="trending">#Trending</string>
 
 </resources>

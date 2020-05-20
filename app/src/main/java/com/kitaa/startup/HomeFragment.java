@@ -112,11 +112,8 @@ public class HomeFragment extends Fragment
         _homePageModelList = new ArrayList<HomePageModel>();
         _homePageModelList.add(new HomePageModel(0, bannerDataList()));
         _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-        _homePageModelList.add(new HomePageModel(2, "# Latest Electronics", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(3, "New In Town", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-        _homePageModelList.add(new HomePageModel(3, "# Trending", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(2, "Deals of the Day", horizontalProductDataList()));
+        _homePageModelList.add(new HomePageModel(2, "#Latest", horizontalProductDataList()));
+        _homePageModelList.add(new HomePageModel(3, "Hot Trends", horizontalProductDataList()));
     }
     /////Homepage Recyclerview
 

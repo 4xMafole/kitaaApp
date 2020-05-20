@@ -24,12 +24,10 @@ import java.util.List;
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>
 {
     private List<WishlistModel> _wishlistModelList;
-    private boolean wishlist;
 
-    public WishlistAdapter(List<WishlistModel> wishlistModelList, boolean wishlist)
+    public WishlistAdapter(List<WishlistModel> wishlistModelList)
     {
         _wishlistModelList = wishlistModelList;
-        this.wishlist = wishlist;
     }
 
 
@@ -95,15 +93,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             productUploadTimeDisplay.setText(uploadTime);
             productRegionDisplay.setText(region);
 
-            if(wishlist)
-            {
-                wishlistItemButton.setVisibility(View.VISIBLE);
-                toggleWishlistButton();
-            }
-            else
-            {
-                wishlistItemButton.setVisibility(View.GONE);
-            }
+            wishlistItemButton.setVisibility(View.VISIBLE);
+            toggleWishlistButton();
 
             lookProduct();
             contactOwner();

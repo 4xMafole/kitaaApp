@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             if(_currentFragment == HOME_FRAGMENT)
             {
+                _currentFragment = -1;
                 super.onBackPressed();
             }
             else

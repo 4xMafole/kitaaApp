@@ -54,7 +54,7 @@ public class WishlistFragment extends Fragment
     private void prepareWishlistDataList()
     {
         wishlistDataList();
-        WishlistAdapter _adapter = new WishlistAdapter(_wishlistModelList, true);
+        WishlistAdapter _adapter = new WishlistAdapter(_wishlistModelList);
         _wishlistRecyclerview.setAdapter(_adapter);
         _adapter.notifyDataSetChanged();
     }

@@ -94,7 +94,7 @@ public class ViewAllActivity extends AppCompatActivity
     private void prepareViewAllDataList()
     {
         viewAllDataList();
-        WishlistAdapter _adapter = new WishlistAdapter(_wishlistModelList, false);
+        WishlistAdapter _adapter = new WishlistAdapter(_wishlistModelList);
         _viewAllRecyclerview.setAdapter(_adapter);
         _adapter.notifyDataSetChanged();
     }

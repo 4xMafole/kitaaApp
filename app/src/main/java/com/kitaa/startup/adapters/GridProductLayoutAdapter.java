@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kitaa.R;
 import com.kitaa.startup.ProductDetailsActivity;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
@@ -71,8 +73,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
             productDescription = _view.findViewById(R.id.h_s_product_description);
             productPrice = _view.findViewById(R.id.h_s_product_price);
 
-//            productPhoto.setImageResource(_horizontalScrollProductModelList.get(position).getProductPhoto());
-
+            Glide.with(parent.getContext()).load(_horizontalScrollProductModelList.get(position).getProductPhoto()).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productPhoto);
             productTitle.setText(_horizontalScrollProductModelList.get(position).getProductTitle());
             productDescription.setText(_horizontalScrollProductModelList.get(position).getProductDescription());
             productPrice.setText(_horizontalScrollProductModelList.get(position).getProductPrice());

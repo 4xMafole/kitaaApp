@@ -2,32 +2,30 @@ package com.kitaa.startup.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kitaa.R;
 import com.kitaa.startup.ProductDetailsActivity;
 import com.kitaa.startup.ViewAllActivity;
 import com.kitaa.startup.models.HomePageModel;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
 import com.kitaa.startup.models.SliderModel;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ import java.util.TimerTask;
 
 public class HomePageAdapter extends RecyclerView.Adapter
 {
+
     private List<HomePageModel> _homePageModelList;
     private RecyclerView.RecycledViewPool _recycledViewPool;
 
@@ -96,7 +95,7 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 ((BannerSliderViewHolder) holder).setBannerSliderViewPager(_sliderModelList);
                 break;
             case HomePageModel.STRIP_AD_BANNER:
-                int resource = _homePageModelList.get(position).getResource();
+                String resource = _homePageModelList.get(position).getResource();
                 ((StripAdViewHolder) holder).setStripAd(resource);
                 break;
             case HomePageModel.HORIZONTAL_PRODUCT_VIEW:
@@ -267,9 +266,9 @@ public class HomePageAdapter extends RecyclerView.Adapter
             _stripAdContainer = itemView.findViewById(R.id.strip_ad_container);
         }
 
-        private void setStripAd(int resource)
+        private void setStripAd(String resource)
         {
-            _stripAdImage.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(_stripAdImage);
         }
     }
 
@@ -347,7 +346,7 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 TextView productPrice = _gridLayout.getChildAt(x).findViewById(R.id.h_s_product_price);
                 TextView productDescription = _gridLayout.getChildAt(x).findViewById(R.id.h_s_product_description);
 
-                productImage.setImageResource(horizontalScrollProductModelList.get(x).getProductPhoto());
+//                Glide.with(itemView.getContext()).load(horizontalScrollProductModelList.get())
                 productTitle.setText(horizontalScrollProductModelList.get(x).getProductTitle());
                 productDescription.setText(horizontalScrollProductModelList.get(x).getProductDescription());
                 productPrice.setText(horizontalScrollProductModelList.get(x).getProductPrice());

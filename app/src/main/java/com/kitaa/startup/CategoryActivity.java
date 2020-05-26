@@ -1,15 +1,14 @@
 package com.kitaa.startup;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.kitaa.R;
 import com.kitaa.startup.adapters.HomePageAdapter;
@@ -68,13 +67,13 @@ public class CategoryActivity extends AppCompatActivity
     private void homePageDataList()
     {
         _homePageModelList = new ArrayList<HomePageModel>();
-        _homePageModelList.add(new HomePageModel(0, bannerDataList()));
-        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-        _homePageModelList.add(new HomePageModel(2, "# Latest Electronics", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(3, "New In Town", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-        _homePageModelList.add(new HomePageModel(3, "# Trending", horizontalProductDataList()));
-        _homePageModelList.add(new HomePageModel(2, "Deals of the Day", horizontalProductDataList()));
+//        _homePageModelList.add(new HomePageModel(0, bannerDataList()));
+//        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
+//        _homePageModelList.add(new HomePageModel(2, "# Latest Electronics", horizontalProductDataList()));
+//        _homePageModelList.add(new HomePageModel(3, "New In Town", horizontalProductDataList()));
+//        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
+//        _homePageModelList.add(new HomePageModel(3, "# Trending", horizontalProductDataList()));
+//        _homePageModelList.add(new HomePageModel(2, "Deals of the Day", horizontalProductDataList()));
     }
     /////Homepage Recyclerview
 
@@ -83,21 +82,21 @@ public class CategoryActivity extends AppCompatActivity
     {
         ///todo: Admin adds user's own banner to promote a work public
         List<SliderModel> _sliderModelList = new ArrayList<SliderModel>();
-
-        _sliderModelList.add(new SliderModel(R.drawable.banner7));
-        _sliderModelList.add(new SliderModel(R.drawable.banner1));
-
-        _sliderModelList.add(new SliderModel(R.drawable.banner2));
-        _sliderModelList.add(new SliderModel(R.drawable.banner));
-        _sliderModelList.add(new SliderModel(R.drawable.banner4));
-        _sliderModelList.add(new SliderModel(R.drawable.banner5));
-        _sliderModelList.add(new SliderModel(R.drawable.banner6));
-        _sliderModelList.add(new SliderModel(R.drawable.banner10));
-        _sliderModelList.add(new SliderModel(R.drawable.banner9));
-        _sliderModelList.add(new SliderModel(R.drawable.banner11));
-
-        _sliderModelList.add(new SliderModel(R.drawable.banner7));
-        _sliderModelList.add(new SliderModel(R.drawable.banner1));
+//
+//        _sliderModelList.add(new SliderModel(R.drawable.banner7));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner1));
+//
+//        _sliderModelList.add(new SliderModel(R.drawable.banner2));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner4));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner5));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner6));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner10));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner9));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner11));
+//
+//        _sliderModelList.add(new SliderModel(R.drawable.banner7));
+//        _sliderModelList.add(new SliderModel(R.drawable.banner1));
 
         return _sliderModelList;
     }
@@ -105,14 +104,6 @@ public class CategoryActivity extends AppCompatActivity
     private List<HorizontalScrollProductModel> horizontalProductDataList()
     {
         List<HorizontalScrollProductModel> _horizontalScrollProductModelList = new ArrayList<>();
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone, "Techno S8", "2 Core Processors", "Tshs.700,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone2, "Huawei P20", "CBC 10-2 Processors", "Tshs.800,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone3, "Vivo 20T", "CBC 10-2 Processors", "Tshs.400,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone4, "Iphone X", "SD 234 Processors", "Tshs.10,000,000/="));
-        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel(R.drawable.phone, "Techno S8", "2 Core Processors", "Tshs.700,000/="));
 
         return _horizontalScrollProductModelList;
     }

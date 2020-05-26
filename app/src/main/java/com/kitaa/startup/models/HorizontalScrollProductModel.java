@@ -2,25 +2,37 @@ package com.kitaa.startup.models;
 
 public class HorizontalScrollProductModel
 {
-    private int productPhoto;
+    private String productID;
+    private String productPhoto;
     private String productTitle;
     private String productDescription;
     private String productPrice;
 
-    public HorizontalScrollProductModel(int productPhoto, String productTitle, String productDescription, String productPrice)
+    public HorizontalScrollProductModel(String productID, String productPhoto, String productTitle, String productDescription, String productPrice)
     {
+        this.productID = productID;
         this.productPhoto = productPhoto;
         this.productTitle = productTitle;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
     }
 
-    public int getProductPhoto()
+    public String getProductID()
+    {
+        return productID;
+    }
+
+    public void setProductID(String productID)
+    {
+        this.productID = productID;
+    }
+
+    public String getProductPhoto()
     {
         return productPhoto;
     }
 
-    public void setProductPhoto(int productPhoto)
+    public void setProductPhoto(String productPhoto)
     {
         this.productPhoto = productPhoto;
     }

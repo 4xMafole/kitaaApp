@@ -1,5 +1,6 @@
 package com.kitaa.startup.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kitaa.R;
 import com.kitaa.startup.ProductDetailsActivity;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
@@ -38,7 +41,7 @@ public class HorizontalScrollProductAdapter extends RecyclerView.Adapter<Horizon
     @Override
     public void onBindViewHolder(@NonNull HorizontalScrollProductAdapter.ViewHolder holder, int position)
     {
-        int resource = _horizontalScrollProductModelList.get(position).getProductPhoto();
+        String resource = _horizontalScrollProductModelList.get(position).getProductPhoto();
         String title = _horizontalScrollProductModelList.get(position).getProductTitle();
         String description = _horizontalScrollProductModelList.get(position).getProductDescription();
         String price = _horizontalScrollProductModelList.get(position).getProductPrice();
@@ -89,9 +92,9 @@ public class HorizontalScrollProductAdapter extends RecyclerView.Adapter<Horizon
             });
         }
 
-        private void setProductPhoto(int resource)
+        private void setProductPhoto(String resource)
         {
-            productPhoto.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productPhoto);
         }
 
         private void setProductTitle(String title)
@@ -104,9 +107,10 @@ public class HorizontalScrollProductAdapter extends RecyclerView.Adapter<Horizon
             productDescription.setText(description);
         }
 
+        @SuppressLint("SetTextI18n")
         private void setProductPrice(String price)
         {
-            productPrice.setText(price);
+            productPrice.setText("Tshs." + price + "/=");
         }
     }
 }

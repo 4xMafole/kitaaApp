@@ -1,16 +1,15 @@
 package com.kitaa.startup.adapters;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kitaa.R;
 import com.kitaa.startup.models.SliderModel;
 
@@ -32,7 +31,7 @@ public class SliderAdapter extends PagerAdapter
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.slider_layout, container, false);
         ImageView banner = view.findViewById(R.id.banner_slider);
         banner.setClipToOutline(true);
-        banner.setImageResource(_sliderModelList.get(position).getBanner());
+        Glide.with(container.getContext()).load(_sliderModelList.get(position).getBanner()).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(banner);
         container.addView(view, 0);
         return view;
     }

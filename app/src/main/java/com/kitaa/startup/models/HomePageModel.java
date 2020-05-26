@@ -14,7 +14,7 @@ public class HomePageModel
     /////Banner Slider
 
     private List<SliderModel> _sliderModelList;
-    private int resource;
+    private String resource;
     /////Horizontal Product layout and Grid Product layout
     private String title;
     private List<HorizontalScrollProductModel> _horizontalScrollProductModelList;
@@ -25,7 +25,7 @@ public class HomePageModel
         _sliderModelList = sliderModelList;
     }
 
-    public HomePageModel(int type, int resource)
+    public HomePageModel(int type, String resource)
     {
         this.type = type;
         this.resource = resource;
@@ -64,12 +64,12 @@ public class HomePageModel
         _sliderModelList = sliderModelList;
     }
 
-    public int getResource()
+    public String getResource()
     {
         return resource;
     }
 
-    public void setResource(int resource)
+    public void setResource(String resource)
     {
         this.resource = resource;
     }

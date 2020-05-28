@@ -1,17 +1,25 @@
 package com.kitaa.startup;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.kitaa.R;
 import com.kitaa.startup.adapters.CategoryAdapter;
 import com.kitaa.startup.adapters.HomePageAdapter;
+
+import java.util.Objects;
 
 import static com.kitaa.startup.database.DBqueries._categoryModelList;
 import static com.kitaa.startup.database.DBqueries._homePageModelList;
@@ -31,6 +39,8 @@ public class HomeFragment extends Fragment
     private RecyclerView _homepageRecyclerview;
     private CategoryAdapter _categoryAdapter;
     private HomePageAdapter _homePageAdapter;
+    private ImageView _noInternetConnection;
+    private TextView _networkError;
 
     public HomeFragment()
     {
@@ -45,13 +55,32 @@ public class HomeFragment extends Fragment
         // Inflate the layout for this fragment
         View _view =  inflater.inflate(R.layout.fragment_home, container, false);
 
-        //Category view
         _categoryRecyclerview = _view.findViewById(R.id.category_rv);
-        initCategoryRecyclerview();
+        _homepageRecyclerview = _view.findViewById(R.id.home_page_recyclerview);
+        _noInternetConnection = _view.findViewById(R.id.no_internet_connection);
+        _networkError = _view.findViewById(R.id.network_error);
+
+        ConnectivityManager _connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo _networkInfo = Objects.requireNonNull(_connectivityManager).getActiveNetworkInfo();
+        if(_networkInfo != null && _networkInfo.isConnected())
+        {
+            _noInternetConnection.setVisibility(View.GONE);
+            _networkError.setVisibility(View.GONE);
+
+            initCategoryRecyclerview();
+            initHomepageRecyclerview();
+        }
+        else
+        {
+            //todo: this image should be changed to reflect no internet connection.
+            Glide.with(this).load(R.drawable.no_internet_connection).into(_noInternetConnection);
+            _noInternetConnection.setVisibility(View.VISIBLE);
+            _networkError.setVisibility(View.VISIBLE);
+        }
+
+        //Category view
 
         //Homepage view
-        _homepageRecyclerview = _view.findViewById(R.id.home_page_recyclerview);
-        initHomepageRecyclerview();
 
         return _view;
     }

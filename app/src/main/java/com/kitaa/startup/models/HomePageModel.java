@@ -18,6 +18,7 @@ public class HomePageModel
     /////Horizontal Product layout and Grid Product layout
     private String title;
     private List<HorizontalScrollProductModel> _horizontalScrollProductModelList;
+    private List<WishlistModel> _viewAllProductList;
 
     public HomePageModel(int type, List<SliderModel> sliderModelList)
     {
@@ -35,11 +36,22 @@ public class HomePageModel
 
     /////Strip Ad Banner
 
-    public HomePageModel(int type, String title, List<HorizontalScrollProductModel> horizontalScrollProductModelList)
+    public HomePageModel(int type, String title, List<HorizontalScrollProductModel> horizontalScrollProductModelList, List<WishlistModel> viewAllProductList)
     {
         this.type = type;
         this.title = title;
-        _horizontalScrollProductModelList = horizontalScrollProductModelList;
+        this._horizontalScrollProductModelList = horizontalScrollProductModelList;
+        this._viewAllProductList = viewAllProductList;
+    }
+
+    public List<WishlistModel> getViewAllProductList()
+    {
+        return _viewAllProductList;
+    }
+
+    public void setViewAllProductList(List<WishlistModel> viewAllProductList)
+    {
+        _viewAllProductList = viewAllProductList;
     }
 
     public int getType()

@@ -26,6 +26,7 @@ import com.kitaa.startup.ViewAllActivity;
 import com.kitaa.startup.models.HomePageModel;
 import com.kitaa.startup.models.HorizontalScrollProductModel;
 import com.kitaa.startup.models.SliderModel;
+import com.kitaa.startup.models.WishlistModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +101,9 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 break;
             case HomePageModel.HORIZONTAL_PRODUCT_VIEW:
                 String horizotalTitle = _homePageModelList.get(position).getTitle();
+                List<WishlistModel> _viewAllProductList = _homePageModelList.get(position).getViewAllProductList();
                 List<HorizontalScrollProductModel> _horizontalScrollProductModelList = _homePageModelList.get(position).getHorizontalScrollProductModelList();
-                ((HorizontalScrollViewHolder) holder).setHorizontalProductLayout(horizotalTitle, _horizontalScrollProductModelList);
+                ((HorizontalScrollViewHolder) holder).setHorizontalProductLayout(horizotalTitle, _horizontalScrollProductModelList, _viewAllProductList);
                 break;
             case HomePageModel.GRID_PRODUCT_VIEW:
                 String gridTitle = _homePageModelList.get(position).getTitle();
@@ -288,7 +290,7 @@ public class HomePageAdapter extends RecyclerView.Adapter
             _horizontalProductRecyclerview.setRecycledViewPool(_recycledViewPool);
         }
 
-        private void setHorizontalProductLayout(String title, List<HorizontalScrollProductModel> horizontalScrollProductModelList)
+        private void setHorizontalProductLayout(final String title, List<HorizontalScrollProductModel> horizontalScrollProductModelList, final List<WishlistModel> viewAllProductList)
         {
             _horizontalProductLayoutTitle.setText(title);
 
@@ -300,8 +302,10 @@ public class HomePageAdapter extends RecyclerView.Adapter
                     @Override
                     public void onClick(View v)
                     {
+                        ViewAllActivity._wishlistModelList = viewAllProductList;
                         Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
                         viewAllIntent.putExtra("layout_code", 0);
+                        viewAllIntent.putExtra("title", title);
                         itemView.getContext().startActivity(viewAllIntent);
                     }
                 });
@@ -335,7 +339,8 @@ public class HomePageAdapter extends RecyclerView.Adapter
             _gridLayout = itemView.findViewById(R.id.grid_product_layout_gridview);
         }
 
-        private void setGridProductLayout(String title, List<HorizontalScrollProductModel> horizontalScrollProductModelList)
+        @SuppressLint("SetTextI18n")
+        private void setGridProductLayout(final String title, final List<HorizontalScrollProductModel> horizontalScrollProductModelList)
         {
             _gridLayoutTitle.setText(title);
 
@@ -349,7 +354,7 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 Glide.with(itemView.getContext()).load(horizontalScrollProductModelList.get(x).getProductPhoto()).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productImage);
                 productTitle.setText(horizontalScrollProductModelList.get(x).getProductTitle());
                 productDescription.setText(horizontalScrollProductModelList.get(x).getProductDescription());
-                productPrice.setText(horizontalScrollProductModelList.get(x).getProductPrice());
+                productPrice.setText("Tshs." + horizontalScrollProductModelList.get(x).getProductPrice() + "/=");
 
                 _gridLayout.getChildAt(x).setOnClickListener(new View.OnClickListener()
                 {
@@ -367,8 +372,10 @@ public class HomePageAdapter extends RecyclerView.Adapter
                 @Override
                 public void onClick(View v)
                 {
+                    ViewAllActivity._horizontalScrollProductModelList = horizontalScrollProductModelList;
                     Intent viewAllIntent = new Intent(itemView.getContext(), ViewAllActivity.class);
                     viewAllIntent.putExtra("layout_code", 1);
+                    viewAllIntent.putExtra("title", title);
                     itemView.getContext().startActivity(viewAllIntent);
                 }
             });

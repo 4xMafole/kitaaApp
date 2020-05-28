@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kitaa.R;
 import com.kitaa.startup.ProductDetailsActivity;
@@ -43,7 +45,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, int position)
     {
-        int resource = _wishlistModelList.get(position).getProductItemImage();
+        String resource = _wishlistModelList.get(position).getProductItemImage();
         String title = _wishlistModelList.get(position).getProductTitleDisplay();
         String price = _wishlistModelList.get(position).getProductPriceDisplay();
         String uploadTime = _wishlistModelList.get(position).getProductUploadTimeDisplay();
@@ -85,11 +87,12 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             wishlistItemButton = itemView.findViewById(R.id.wishlist_item_button);
         }
 
-        private void setData(int resource, String title, String price, String uploadTime, String region)
+        @SuppressLint("SetTextI18n")
+        private void setData(String resource, String title, String price, String uploadTime, String region)
         {
-            productItemImage.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productItemImage);
             productTitleDisplay.setText(title);
-            productPriceDisplay.setText(price);
+            productPriceDisplay.setText("Tshs." + price + "/=");
             productUploadTimeDisplay.setText(uploadTime);
             productRegionDisplay.setText(region);
 

@@ -1,5 +1,6 @@
 package com.kitaa.startup.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, final ViewGroup parent)
     {
@@ -76,7 +78,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
             Glide.with(parent.getContext()).load(_horizontalScrollProductModelList.get(position).getProductPhoto()).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productPhoto);
             productTitle.setText(_horizontalScrollProductModelList.get(position).getProductTitle());
             productDescription.setText(_horizontalScrollProductModelList.get(position).getProductDescription());
-            productPrice.setText(_horizontalScrollProductModelList.get(position).getProductPrice());
+            productPrice.setText("Tshs." + _horizontalScrollProductModelList.get(position).getProductPrice() + "/=");
 
         }
         else

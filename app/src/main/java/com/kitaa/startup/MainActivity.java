@@ -2,10 +2,7 @@ package com.kitaa.startup;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +22,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.kitaa.R;
 import com.kitaa.startup.auth.RegisterActivity;
@@ -48,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout _frameLayout;
     private int _currentFragment = -1;
     private ImageView _actionBarLogo;
-    private ImageView _noInternetConnection;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -70,34 +65,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         _frameLayout = findViewById(R.id.main_framelayout);
-        _noInternetConnection = findViewById(R.id.no_internet_connection);
 
-        ConnectivityManager _connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo _networkInfo = Objects.requireNonNull(_connectivityManager).getActiveNetworkInfo();
-
-        if(_networkInfo != null && _networkInfo.isConnected())
+        if(SHOW_WISHLIST)
         {
-            _noInternetConnection.setVisibility(View.VISIBLE);
-            if(SHOW_WISHLIST)
-            {
-                drawer.setDrawerLockMode(1);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                gotoFragment("My Wishlist", new WishlistFragment(), -2);
-            }
-            else
-            {
-                ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(this, drawer, _toolbar, 0, 0);
-                drawer.addDrawerListener(_toggle);
-                _toggle.syncState();
-                setFragment(new HomeFragment(), HOME_FRAGMENT);
-            }
+            drawer.setDrawerLockMode(1);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            gotoFragment("My Wishlist", new WishlistFragment(), -2);
         }
         else
         {
-            //todo: this image should be changed to reflect no internet connection.
-            Glide.with(this).load(R.drawable.phone).into(_noInternetConnection);
-            _noInternetConnection.setVisibility(View.VISIBLE);
+            ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(this, drawer, _toolbar, 0, 0);
+            drawer.addDrawerListener(_toggle);
+            _toggle.syncState();
+            setFragment(new HomeFragment(), HOME_FRAGMENT);
         }
+
+
     }
 
     @Override

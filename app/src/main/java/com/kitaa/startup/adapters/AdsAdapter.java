@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kitaa.R;
 import com.kitaa.startup.models.WishlistModel;
 
@@ -36,7 +38,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-        int resource = _adsModelList.get(position).getProductItemImage();
+        String resource = _adsModelList.get(position).getProductItemImage();
         String title = _adsModelList.get(position).getProductTitleDisplay();
         String price = _adsModelList.get(position).getProductPriceDisplay();
         String uploadTime = _adsModelList.get(position).getProductUploadTimeDisplay();
@@ -71,9 +73,9 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.ViewHolder>
             deleteAdButton = itemView.findViewById(R.id.delete_ad_button);
         }
 
-        private void setAdData(int resource, String title, String price, String uploadTime, String region)
+        private void setAdData(String resource, String title, String price, String uploadTime, String region)
         {
-            productItemImageAd.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(productItemImageAd);
             productTitleDisplayAd.setText(title);
             productPriceDisplayAd.setText(price);
             productUploadTimeDisplayAd.setText(uploadTime);

@@ -1,18 +1,16 @@
 package com.kitaa.startup;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.kitaa.R;
 import com.kitaa.startup.adapters.AdsAdapter;
-import com.kitaa.startup.adapters.WishlistAdapter;
 import com.kitaa.startup.models.WishlistModel;
 
 import java.util.ArrayList;
@@ -63,10 +61,11 @@ public class AdsFragment extends Fragment
 
     private void adsDataList()
     {
+        ///todo: Adds fragment needs to retrive data from the firebase database for the user to have a specific ads uploaded by him.
         _AdsModelList = new ArrayList<>();
-        _AdsModelList.add(new WishlistModel(R.drawable.banner, "Hello Lotion CRs19", "Tshs.30,000", "46 minutes", "Kigoma"));
-        _AdsModelList.add(new WishlistModel(R.drawable.banner2, "Buggati Veron 213L", "Tshs.144,000", "24/05/20", "Dar es Salaam"));
-        _AdsModelList.add(new WishlistModel(R.drawable.banner3, "GSM Mall Collections Pie", "Tshs.32,000", "19/04/20", "Mwanza"));
+//        _AdsModelList.add(new WishlistModel(R.drawable.banner, "Hello Lotion CRs19", "Tshs.30,000", "46 minutes", "Kigoma"));
+//        _AdsModelList.add(new WishlistModel(R.drawable.banner2, "Buggati Veron 213L", "Tshs.144,000", "24/05/20", "Dar es Salaam"));
+//        _AdsModelList.add(new WishlistModel(R.drawable.banner3, "GSM Mall Collections Pie", "Tshs.32,000", "19/04/20", "Mwanza"));
 
     }
 }

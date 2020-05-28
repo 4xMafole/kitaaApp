@@ -2,27 +2,29 @@ package com.kitaa.startup.models;
 
 public class WishlistModel
 {
-    private int productItemImage;
+    private String productItemImage;
     private String productTitleDisplay;
     private String productPriceDisplay;
     private String productUploadTimeDisplay;
     private String productRegionDisplay;
+    private String productContact;
 
-    public WishlistModel(int productItemImage, String productTitleDisplay, String productPriceDisplay, String productUploadTimeDisplay, String productRegionDisplay)
+    public WishlistModel(String productItemImage, String productTitleDisplay, String productPriceDisplay, String productUploadTimeDisplay, String productRegionDisplay, String productContact)
     {
         this.productItemImage = productItemImage;
         this.productTitleDisplay = productTitleDisplay;
         this.productPriceDisplay = productPriceDisplay;
         this.productUploadTimeDisplay = productUploadTimeDisplay;
         this.productRegionDisplay = productRegionDisplay;
+        this.productContact = productContact;
     }
 
-    public int getProductItemImage()
+    public String getProductItemImage()
     {
         return productItemImage;
     }
 
-    public void setProductItemImage(int productItemImage)
+    public void setProductItemImage(String productItemImage)
     {
         this.productItemImage = productItemImage;
     }
@@ -66,4 +68,15 @@ public class WishlistModel
     {
         this.productRegionDisplay = productRegionDisplay;
     }
+
+    public String getProductContact()
+    {
+        return productContact;
+    }
+
+    public void setProductContact(String productContact)
+    {
+        this.productContact = productContact;
+    }
 }
+

@@ -13,19 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kitaa.R;
 import com.kitaa.startup.adapters.HomePageAdapter;
 import com.kitaa.startup.models.HomePageModel;
-import com.kitaa.startup.models.HorizontalScrollProductModel;
-import com.kitaa.startup.models.SliderModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import static com.kitaa.startup.database.DBqueries.lists;
+import static com.kitaa.startup.database.DBqueries.loadFragmentData;
+import static com.kitaa.startup.database.DBqueries.loadedCategoriesNames;
 
 public class CategoryActivity extends AppCompatActivity
 {
 
     private Toolbar _toolbar;
     private RecyclerView _categoryRecyclerview;
-    private ArrayList<HomePageModel> _homePageModelList;
+    private String _title;
+    private HomePageAdapter _homePageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +38,7 @@ public class CategoryActivity extends AppCompatActivity
 
         setSupportActionBar(_toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        String _title = getIntent().getStringExtra("CategoryName");
+        _title = getIntent().getStringExtra("CategoryName");
         Objects.requireNonNull(getSupportActionBar()).setTitle(_title);
 
         /////RecyclerView
@@ -59,55 +61,34 @@ public class CategoryActivity extends AppCompatActivity
     private void prepareHomePageData()
     {
         homePageDataList();
-        HomePageAdapter _homePageAdapter = new HomePageAdapter(_homePageModelList);
         _categoryRecyclerview.setAdapter(_homePageAdapter);
         _homePageAdapter.notifyDataSetChanged();
     }
 
     private void homePageDataList()
     {
-        _homePageModelList = new ArrayList<HomePageModel>();
-//        _homePageModelList.add(new HomePageModel(0, bannerDataList()));
-//        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-//        _homePageModelList.add(new HomePageModel(2, "# Latest Electronics", horizontalProductDataList()));
-//        _homePageModelList.add(new HomePageModel(3, "New In Town", horizontalProductDataList()));
-//        _homePageModelList.add(new HomePageModel(1, R.drawable.strip_add));
-//        _homePageModelList.add(new HomePageModel(3, "# Trending", horizontalProductDataList()));
-//        _homePageModelList.add(new HomePageModel(2, "Deals of the Day", horizontalProductDataList()));
+        int listPosition = 0;
+        for(int x = 0; x < loadedCategoriesNames.size(); x++)
+        {
+            if(loadedCategoriesNames.get(x).equals(_title.toUpperCase()))
+            {
+                listPosition = x;
+            }
+        }
+
+        if(listPosition == 0)
+        {
+            loadedCategoriesNames.add(_title.toUpperCase());
+            lists.add(new ArrayList<HomePageModel>());
+            _homePageAdapter = new HomePageAdapter(lists.get(loadedCategoriesNames.size() - 1));
+            loadFragmentData(_homePageAdapter, this, loadedCategoriesNames.size() - 1, _title);
+        }
+        else
+        {
+            _homePageAdapter = new HomePageAdapter(lists.get(listPosition));
+        }
     }
     /////Homepage Recyclerview
-
-    /////Banner and horizontal data list.
-    private List<SliderModel> bannerDataList()
-    {
-        ///todo: Admin adds user's own banner to promote a work public
-        List<SliderModel> _sliderModelList = new ArrayList<SliderModel>();
-//
-//        _sliderModelList.add(new SliderModel(R.drawable.banner7));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner1));
-//
-//        _sliderModelList.add(new SliderModel(R.drawable.banner2));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner4));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner5));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner6));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner10));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner9));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner11));
-//
-//        _sliderModelList.add(new SliderModel(R.drawable.banner7));
-//        _sliderModelList.add(new SliderModel(R.drawable.banner1));
-
-        return _sliderModelList;
-    }
-
-    private List<HorizontalScrollProductModel> horizontalProductDataList()
-    {
-        List<HorizontalScrollProductModel> _horizontalScrollProductModelList = new ArrayList<>();
-
-        return _horizontalScrollProductModelList;
-    }
-    /////Banner and horizontal data list.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

@@ -18,13 +18,16 @@ import com.bumptech.glide.Glide;
 import com.kitaa.R;
 import com.kitaa.startup.adapters.CategoryAdapter;
 import com.kitaa.startup.adapters.HomePageAdapter;
+import com.kitaa.startup.models.HomePageModel;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.kitaa.startup.database.DBqueries._categoryModelList;
-import static com.kitaa.startup.database.DBqueries._homePageModelList;
+import static com.kitaa.startup.database.DBqueries.lists;
 import static com.kitaa.startup.database.DBqueries.loadCategories;
 import static com.kitaa.startup.database.DBqueries.loadFragmentData;
+import static com.kitaa.startup.database.DBqueries.loadedCategoriesNames;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,17 +127,20 @@ public class HomeFragment extends Fragment
 
     private void prepareHomePageData()
     {
-        _homePageAdapter = new HomePageAdapter(_homePageModelList);
-        _homepageRecyclerview.setAdapter(_homePageAdapter);
 
-        if(_homePageModelList.size() == 0)
+        if(lists.size() == 0)
         {
-            loadFragmentData(_homePageAdapter, getContext());
+            loadedCategoriesNames.add("HOME");
+            lists.add(new ArrayList<HomePageModel>());
+            _homePageAdapter = new HomePageAdapter(lists.get(0));
+            loadFragmentData(_homePageAdapter, getContext(), 0, "Home");
         }
         else
         {
+            _homePageAdapter = new HomePageAdapter(lists.get(0));
             _homePageAdapter.notifyDataSetChanged();
         }
+        _homepageRecyclerview.setAdapter(_homePageAdapter);
     }
 
     /////Homepage Recyclerview

@@ -26,8 +26,9 @@ public class DBqueries
 {
     public static FirebaseFirestore _firebaseFirestore = FirebaseFirestore.getInstance();
     public static List<CategoryModel> _categoryModelList = new ArrayList<>();
-    public static List<HomePageModel> _homePageModelList = new ArrayList<>();
 
+    public static List<List<HomePageModel>> lists = new ArrayList<>();
+    public static List<String> loadedCategoriesNames = new ArrayList<>();
 
     public static void loadCategories(final CategoryAdapter _categoryAdapter, final Context _context)
     {
@@ -53,9 +54,9 @@ public class DBqueries
         });
     }
 
-    public static void loadFragmentData(final HomePageAdapter _homePageAdapter, final Context _context)
+    public static void loadFragmentData(final HomePageAdapter _homePageAdapter, final Context _context, final int index, String categoryName)
     {
-        _firebaseFirestore.collection("CATEGORIES").document("HOME").collection("TOP_DEALS").orderBy("index").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+        _firebaseFirestore.collection("CATEGORIES").document(categoryName.toUpperCase()).collection("TOP_DEALS").orderBy("index").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
         {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task)
@@ -73,11 +74,11 @@ public class DBqueries
                             {
                                 _sliderModelList.add(new SliderModel(Objects.requireNonNull(_documentSnapshot.get("banner_" + x)).toString()));
                             }
-                            _homePageModelList.add(new HomePageModel(0, _sliderModelList));
+                            lists.get(index).add(new HomePageModel(0, _sliderModelList));
                         }
                         else if((long) _documentSnapshot.get("view_type") == 1)
                         {
-                            _homePageModelList.add(new HomePageModel(1, Objects.requireNonNull(_documentSnapshot.get("strip_ad_banner")).toString()));
+                            lists.get(index).add(new HomePageModel(1, Objects.requireNonNull(_documentSnapshot.get("strip_ad_banner")).toString()));
                         }
                         else if((long) _documentSnapshot.get("view_type") == 2)
                         {
@@ -90,7 +91,7 @@ public class DBqueries
 
                                 _viewAllProductList.add(new WishlistModel(Objects.requireNonNull(_documentSnapshot.get("product_image_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_title_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_price_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_uploaded_time_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_location_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_contact_" + x)).toString()));
                             }
-                            _homePageModelList.add(new HomePageModel(2, Objects.requireNonNull(_documentSnapshot.get("layout_title")).toString(), _horizontalScrollProductModelList, _viewAllProductList));
+                            lists.get(index).add(new HomePageModel(2, Objects.requireNonNull(_documentSnapshot.get("layout_title")).toString(), _horizontalScrollProductModelList, _viewAllProductList));
                         }
                         else if((long) _documentSnapshot.get("view_type") == 3)
                         {
@@ -100,7 +101,7 @@ public class DBqueries
                             {
                                 _gridProductModelList.add(new HorizontalScrollProductModel(Objects.requireNonNull(_documentSnapshot.get("product_ID_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_image_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_title_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_subtitle_" + x)).toString(), Objects.requireNonNull(_documentSnapshot.get("product_price_" + x)).toString()));
                             }
-                            _homePageModelList.add(new HomePageModel(3, Objects.requireNonNull(_documentSnapshot.get("layout_title")).toString(), _gridProductModelList, null));
+                            lists.get(index).add(new HomePageModel(3, Objects.requireNonNull(_documentSnapshot.get("layout_title")).toString(), _gridProductModelList, null));
 
                         }
 

@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kitaa.R;
 import com.kitaa.startup.adapters.HomePageAdapter;
 import com.kitaa.startup.models.HomePageModel;
+import com.kitaa.startup.models.HorizontalScrollProductModel;
+import com.kitaa.startup.models.WishlistModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.kitaa.startup.database.DBqueries.lists;
@@ -28,6 +31,7 @@ public class CategoryActivity extends AppCompatActivity
     private RecyclerView _categoryRecyclerview;
     private String _title;
     private HomePageAdapter _homePageAdapter;
+    private List<HomePageModel> _homePageFakeModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +55,7 @@ public class CategoryActivity extends AppCompatActivity
     /////Homepage Recyclerview
     private void initHomepageRecyclerview()
     {
+        homeFakePageDataList();
         LinearLayoutManager _linearLayoutManager = new LinearLayoutManager(this);
         _linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         _categoryRecyclerview.setLayoutManager(_linearLayoutManager);
@@ -60,6 +65,7 @@ public class CategoryActivity extends AppCompatActivity
 
     private void prepareHomePageData()
     {
+        _homePageAdapter = new HomePageAdapter(_homePageFakeModelList);
         homePageDataList();
         _categoryRecyclerview.setAdapter(_homePageAdapter);
         _homePageAdapter.notifyDataSetChanged();
@@ -80,13 +86,30 @@ public class CategoryActivity extends AppCompatActivity
         {
             loadedCategoriesNames.add(_title.toUpperCase());
             lists.add(new ArrayList<HomePageModel>());
-            _homePageAdapter = new HomePageAdapter(lists.get(loadedCategoriesNames.size() - 1));
-            loadFragmentData(_homePageAdapter, this, loadedCategoriesNames.size() - 1, _title);
+            loadFragmentData(_categoryRecyclerview, this, loadedCategoriesNames.size() - 1, _title);
         }
         else
         {
             _homePageAdapter = new HomePageAdapter(lists.get(listPosition));
         }
+    }
+
+    private void homeFakePageDataList()
+    {
+        List<HorizontalScrollProductModel> _horizontalScrollProductModelList = new ArrayList<>();
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+        _horizontalScrollProductModelList.add(new HorizontalScrollProductModel("", "", "", "", ""));
+
+        _homePageFakeModelList.add(new HomePageModel(1, ""));
+        _homePageFakeModelList.add(new HomePageModel(3, "Trending Deals", _horizontalScrollProductModelList, new ArrayList<WishlistModel>()));
+        _homePageFakeModelList.add(new HomePageModel(2, "#Latest", _horizontalScrollProductModelList, new ArrayList<WishlistModel>()));
     }
     /////Homepage Recyclerview
 

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.kitaa.startup.HomeFragment;
 import com.kitaa.startup.adapters.CategoryAdapter;
 import com.kitaa.startup.adapters.HomePageAdapter;
 import com.kitaa.startup.models.CategoryModel;
@@ -30,7 +32,7 @@ public class DBqueries
     public static List<List<HomePageModel>> lists = new ArrayList<>();
     public static List<String> loadedCategoriesNames = new ArrayList<>();
 
-    public static void loadCategories(final CategoryAdapter _categoryAdapter, final Context _context)
+    public static void loadCategories(final RecyclerView _categoryRecyclerView, final Context _context)
     {
         _firebaseFirestore.collection("CATEGORIES").orderBy("index").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
         {
@@ -43,6 +45,8 @@ public class DBqueries
                     {
                         _categoryModelList.add(new CategoryModel(Objects.requireNonNull(_documentSnapshot.get("icon")).toString(), Objects.requireNonNull(_documentSnapshot.get("categoryName")).toString()));
                     }
+                    CategoryAdapter _categoryAdapter = new CategoryAdapter(_categoryModelList);
+                    _categoryRecyclerView.setAdapter(_categoryAdapter);
                     _categoryAdapter.notifyDataSetChanged();
                 }
                 else
@@ -54,7 +58,7 @@ public class DBqueries
         });
     }
 
-    public static void loadFragmentData(final HomePageAdapter _homePageAdapter, final Context _context, final int index, String categoryName)
+    public static void loadFragmentData(final RecyclerView homePageRecyclerview, final Context _context, final int index, String categoryName)
     {
         _firebaseFirestore.collection("CATEGORIES").document(categoryName.toUpperCase()).collection("TOP_DEALS").orderBy("index").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
         {
@@ -106,7 +110,10 @@ public class DBqueries
                         }
 
                     }
+                    HomePageAdapter _homePageAdapter = new HomePageAdapter(lists.get(index));
+                    homePageRecyclerview.setAdapter(_homePageAdapter);
                     _homePageAdapter.notifyDataSetChanged();
+                    HomeFragment._refreshLayout.setRefreshing(false);
                 }
                 else
                 {

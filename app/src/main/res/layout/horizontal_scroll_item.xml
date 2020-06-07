@@ -31,7 +31,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/phone4" />
+                app:srcCompat="@drawable/slider_background" />
 
             <TextView
                 android:id="@+id/h_s_product_title"

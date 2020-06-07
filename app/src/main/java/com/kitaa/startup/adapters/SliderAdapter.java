@@ -31,7 +31,7 @@ public class SliderAdapter extends PagerAdapter
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.slider_layout, container, false);
         ImageView banner = view.findViewById(R.id.banner_slider);
         banner.setClipToOutline(true);
-        Glide.with(container.getContext()).load(_sliderModelList.get(position).getBanner()).apply(new RequestOptions().placeholder(R.drawable.ic_shopping_cart_24dp)).into(banner);
+        Glide.with(container.getContext()).load(_sliderModelList.get(position).getBanner()).apply(new RequestOptions().placeholder(R.drawable.slider_background)).into(banner);
         container.addView(view, 0);
         return view;
     }

@@ -85,38 +85,6 @@ public class HomeFragment extends Fragment
         return _view;
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        autoRefreshHomeLayout();
-    }
-
-    ///todo: Need to store fragment info to avoid several refreshing of the view.
-    private void autoRefreshHomeLayout()
-    {
-        if(_networkInfo != null && _networkInfo.isConnected())
-        {
-            _noInternetConnection.setVisibility(View.GONE);
-            _categoryRecyclerview.setAdapter(_categoryAdapter);
-            _homepageRecyclerview.setAdapter(_homePageAdapter);
-
-
-            loadCategories(_categoryRecyclerview, getContext());
-
-            loadedCategoriesNames.add("HOME");
-            lists.add(new ArrayList<HomePageModel>());
-            loadFragmentData(_homepageRecyclerview, getContext(), 0, "Home");
-
-        }
-        else
-        {
-            Glide.with(requireContext()).load(R.drawable.no_internet_connection).into(_noInternetConnection);
-            _noInternetConnection.setVisibility(View.VISIBLE);
-
-        }
-    }
-
     private void checkConnection()
     {
         _connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -155,6 +123,8 @@ public class HomeFragment extends Fragment
                 if(_networkInfo != null && _networkInfo.isConnected())
                 {
                     _noInternetConnection.setVisibility(View.GONE);
+                    _categoryAdapter = new CategoryAdapter(_categoryFakeModelList);
+                    _homePageAdapter = new HomePageAdapter(_homePageFakeModelList);
                     _categoryRecyclerview.setAdapter(_categoryAdapter);
                     _homepageRecyclerview.setAdapter(_homePageAdapter);
 
@@ -189,7 +159,6 @@ public class HomeFragment extends Fragment
     {
         categoryFakeDataList();
         _categoryAdapter = new CategoryAdapter(_categoryFakeModelList);
-        _categoryRecyclerview.setAdapter(_categoryAdapter);
 
         if(_categoryModelList.size() == 0)
         {
@@ -197,20 +166,22 @@ public class HomeFragment extends Fragment
         }
         else
         {
+            _categoryAdapter = new CategoryAdapter(_categoryModelList);
             _categoryAdapter.notifyDataSetChanged();
         }
+        _categoryRecyclerview.setAdapter(_categoryAdapter);
     }
 
     private void categoryFakeDataList()
     {
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
-        _categoryFakeModelList.add(new CategoryModel("null", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
+        _categoryFakeModelList.add(new CategoryModel("", ""));
     }
 
     /////Category Recyclerview
@@ -229,7 +200,6 @@ public class HomeFragment extends Fragment
     {
         homeFakePageDataList();
         _homePageAdapter = new HomePageAdapter(_homePageFakeModelList);
-        _homepageRecyclerview.setAdapter(_homePageAdapter);
 
         if(lists.size() == 0)
         {
@@ -242,6 +212,7 @@ public class HomeFragment extends Fragment
             _homePageAdapter = new HomePageAdapter(lists.get(0));
             _homePageAdapter.notifyDataSetChanged();
         }
+        _homepageRecyclerview.setAdapter(_homePageAdapter);
     }
 
     private void homeFakePageDataList()

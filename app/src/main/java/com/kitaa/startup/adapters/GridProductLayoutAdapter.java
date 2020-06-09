@@ -46,7 +46,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent)
+    public View getView(final int position, View convertView, final ViewGroup parent)
     {
         View _view;
         ImageView productPhoto;
@@ -65,6 +65,7 @@ public class GridProductLayoutAdapter extends BaseAdapter
                 public void onClick(View v)
                 {
                     Intent productDetailsIntent = new Intent(parent.getContext(), ProductDetailsActivity.class);
+                    productDetailsIntent.putExtra("PRODUCT_ID", _horizontalScrollProductModelList.get(position).getProductID());
                     parent.getContext().startActivity(productDetailsIntent);
 
                 }

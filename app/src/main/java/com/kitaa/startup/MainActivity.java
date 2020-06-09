@@ -29,6 +29,7 @@ import com.kitaa.startup.auth.RegisterActivity;
 import java.util.Objects;
 
 import static com.kitaa.startup.auth.RegisterActivity._setSignUpFragment;
+import static com.kitaa.startup.database.DBqueries._currentUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout _frameLayout;
     private int _currentFragment = -1;
     private ImageView _actionBarLogo;
+    private DrawerLayout _drawer;
+    private Dialog _signInDialog;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -57,30 +60,92 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         _actionBarLogo = findViewById(R.id.actionBar_logo);
+        _frameLayout = findViewById(R.id.main_framelayout);
 
         _navigationView = findViewById(R.id.nav_view);
         _navigationView.setNavigationItemSelectedListener(this);
         _navigationView.getMenu().getItem(0).setChecked(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        _drawer = findViewById(R.id.drawer_layout);
+        displayWishlist();
 
-        _frameLayout = findViewById(R.id.main_framelayout);
+        checkCurrentUser();
 
+    }
+
+    private void checkCurrentUser()
+    {
+        int navigationItem = 4;
+        if(_currentUser == null)
+        {
+            for(int x = 1; x < navigationItem; x++)
+            {
+                _navigationView.getMenu().getItem(_navigationView.getMenu().size() - x).setEnabled(false);
+                _navigationView.getMenu().getItem(_navigationView.getMenu().size() - x).setVisible(false);
+            }
+        }
+        else
+        {
+            for(int x = 1; x < navigationItem; x++)
+            {
+                _navigationView.getMenu().getItem(_navigationView.getMenu().size() - x).setEnabled(true);
+                _navigationView.getMenu().getItem(_navigationView.getMenu().size() - x).setVisible(true);
+            }
+        }
+        authDialog();
+
+    }
+
+    private void authDialog()
+    {
+        _signInDialog = new Dialog(MainActivity.this);
+        _signInDialog.setContentView(R.layout.sign_in_dialog);
+        _signInDialog.setCancelable(true);
+        Objects.requireNonNull(_signInDialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        Button dialogSignInDialogBtn = _signInDialog.findViewById(R.id.sign_in_dialog_btn);
+        Button dialogSignUpDialogBtn = _signInDialog.findViewById(R.id.sign_up_dialog_btn);
+        final Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+
+        dialogSignInDialogBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _signInDialog.dismiss();
+                _setSignUpFragment = false;
+                startActivity(registerIntent);
+            }
+        });
+
+        dialogSignUpDialogBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _signInDialog.dismiss();
+                _setSignUpFragment = true;
+                startActivity(registerIntent);
+            }
+        });
+    }
+
+    @SuppressLint("WrongConstant")
+    private void displayWishlist()
+    {
         if(SHOW_WISHLIST)
         {
-            drawer.setDrawerLockMode(1);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            _drawer.setDrawerLockMode(1);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             gotoFragment("My Wishlist", new WishlistFragment(), -2);
         }
         else
         {
-            ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(this, drawer, _toolbar, 0, 0);
-            drawer.addDrawerListener(_toggle);
+            ActionBarDrawerToggle _toggle = new ActionBarDrawerToggle(this, _drawer, _toolbar, 0, 0);
+            _drawer.addDrawerListener(_toggle);
             _toggle.syncState();
             setFragment(new HomeFragment(), HOME_FRAGMENT);
         }
-
-
     }
 
     @Override
@@ -112,40 +177,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.main_wishlist_icon)
         {
-            final Dialog signInDialog = new Dialog(MainActivity.this);
-            signInDialog.setContentView(R.layout.sign_in_dialog);
-            signInDialog.setCancelable(true);
-            Objects.requireNonNull(signInDialog.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            Button dialogSignInDialogBtn = signInDialog.findViewById(R.id.sign_in_dialog_btn);
-            Button dialogSignUpDialogBtn = signInDialog.findViewById(R.id.sign_up_dialog_btn);
-            final Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
-
-            dialogSignInDialogBtn.setOnClickListener(new View.OnClickListener()
+            if(_currentUser == null)
             {
-                @Override
-                public void onClick(View v)
-                {
-                    signInDialog.dismiss();
-                    _setSignUpFragment = false;
-                    startActivity(registerIntent);
-                }
-            });
-
-            dialogSignUpDialogBtn.setOnClickListener(new View.OnClickListener()
+                _signInDialog.show();
+            }
+            else
             {
-                @Override
-                public void onClick(View v)
-                {
-                    signInDialog.dismiss();
-                    _setSignUpFragment = true;
-                    startActivity(registerIntent);
-                }
-            });
+                gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
+            }
 
-            signInDialog.show();
-
-//            gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
             return true;
         }
         else if(id == android.R.id.home)
@@ -174,33 +214,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
-        int id = item.getItemId();
-
-        if(id == R.id.main_home)
-        {
-            _actionBarLogo.setVisibility(View.VISIBLE);
-            invalidateOptionsMenu();
-            setFragment(new HomeFragment(), HOME_FRAGMENT);
-        }
-        else if(id == R.id.main_ads)
-         {
-             gotoFragment("My Ads", new AdsFragment(), ADS_FRAGMENT);
-         }
-         else if(id == R.id.main_wishlist)
-         {
-             gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
-         }
-         else if(id == R.id.main_profile)
-         {
-             gotoFragment("My Profile", new AccountFragment(), ACCOUNT_FRAGMENT);
-         }
-         else if(id == R.id.main_logout)
-        {
-            Toast.makeText(this, "Logout fragment", Toast.LENGTH_SHORT).show();
-        }
         DrawerLayout _drawerLayout = findViewById(R.id.drawer_layout);
-        _drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+
+        if(_currentUser != null)
+        {
+            int id = item.getItemId();
+
+            if(id == R.id.main_home)
+            {
+                _actionBarLogo.setVisibility(View.VISIBLE);
+                invalidateOptionsMenu();
+                setFragment(new HomeFragment(), HOME_FRAGMENT);
+            }
+            else if(id == R.id.main_ads)
+            {
+                gotoFragment("My Ads", new AdsFragment(), ADS_FRAGMENT);
+            }
+            else if(id == R.id.main_wishlist)
+            {
+                gotoFragment("My Wishlist", new WishlistFragment(), WISHLIST_FRAGMENT);
+            }
+            else if(id == R.id.main_profile)
+            {
+                gotoFragment("My Profile", new AccountFragment(), ACCOUNT_FRAGMENT);
+            }
+            else if(id == R.id.main_logout)
+            {
+                Toast.makeText(this, "Logout fragment", Toast.LENGTH_SHORT).show();
+            }
+            _drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        else
+        {
+            _drawerLayout.closeDrawer(GravityCompat.START);
+            _signInDialog.show();
+            return false;
+        }
     }
 
     @Override

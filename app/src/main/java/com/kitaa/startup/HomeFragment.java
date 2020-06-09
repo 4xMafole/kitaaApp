@@ -94,12 +94,19 @@ public class HomeFragment extends Fragment
             _noInternetConnection.setVisibility(View.GONE);
             _networkError.setVisibility(View.GONE);
 
+            _categoryRecyclerview.setVisibility(View.VISIBLE);
+            _homepageRecyclerview.setVisibility(View.VISIBLE);
+
             initCategoryRecyclerview();
             initHomepageRecyclerview();
         }
         else
         {
+            _categoryRecyclerview.setVisibility(View.GONE);
+            _homepageRecyclerview.setVisibility(View.GONE);
+
             Glide.with(this).load(R.drawable.no_internet_connection).into(_noInternetConnection);
+
             _noInternetConnection.setVisibility(View.VISIBLE);
             _networkError.setVisibility(View.VISIBLE);
         }
@@ -115,7 +122,7 @@ public class HomeFragment extends Fragment
             public void onRefresh()
             {
                 _refreshLayout.setRefreshing(true);
-
+                _networkInfo = Objects.requireNonNull(_connectivityManager).getActiveNetworkInfo();
                 _categoryModelList.clear();
                 lists.clear();
                 loadedCategoriesNames.clear();
@@ -123,6 +130,11 @@ public class HomeFragment extends Fragment
                 if(_networkInfo != null && _networkInfo.isConnected())
                 {
                     _noInternetConnection.setVisibility(View.GONE);
+                    _networkError.setVisibility(View.GONE);
+
+                    _categoryRecyclerview.setVisibility(View.VISIBLE);
+                    _homepageRecyclerview.setVisibility(View.VISIBLE);
+
                     _categoryAdapter = new CategoryAdapter(_categoryFakeModelList);
                     _homePageAdapter = new HomePageAdapter(_homePageFakeModelList);
                     _categoryRecyclerview.setAdapter(_categoryAdapter);
@@ -139,8 +151,13 @@ public class HomeFragment extends Fragment
                 else
                 {
                     Glide.with(requireContext()).load(R.drawable.no_internet_connection).into(_noInternetConnection);
-                    _noInternetConnection.setVisibility(View.VISIBLE);
+                    _categoryRecyclerview.setVisibility(View.GONE);
+                    _homepageRecyclerview.setVisibility(View.GONE);
 
+                    _noInternetConnection.setVisibility(View.VISIBLE);
+                    _networkError.setVisibility(View.VISIBLE);
+
+                    _refreshLayout.setRefreshing(false);
                 }
             }
         });

@@ -1,12 +1,12 @@
 package com.kitaa.startup;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.kitaa.R;
 
@@ -21,11 +21,16 @@ public class ProductDescriptionFragment extends Fragment
         // Required empty public constructor
     }
 
+    public String _body;
+    private TextView _descriptionBody;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_description, container, false);
+        View _view = inflater.inflate(R.layout.fragment_product_description, container, false);
+        _descriptionBody = _view.findViewById(R.id.product_description_text);
+        _descriptionBody.setText(_body);
+        return _view;
     }
 }

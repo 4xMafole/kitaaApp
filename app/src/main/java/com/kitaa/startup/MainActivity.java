@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,13 +22,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kitaa.R;
 import com.kitaa.startup.auth.RegisterActivity;
 
 import java.util.Objects;
 
 import static com.kitaa.startup.auth.RegisterActivity._setSignUpFragment;
-import static com.kitaa.startup.database.DBqueries._currentUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FrameLayout _frameLayout;
     private int _currentFragment = -1;
     private ImageView _actionBarLogo;
-    private DrawerLayout _drawer;
+    public static DrawerLayout _drawer;
     private Dialog _signInDialog;
+
+    private FirebaseUser _currentUser;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -69,13 +71,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         _drawer = findViewById(R.id.drawer_layout);
         displayWishlist();
 
-        checkCurrentUser();
+    }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        checkCurrentUser();
     }
 
     private void checkCurrentUser()
     {
         int navigationItem = 4;
+        _currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(_currentUser == null)
         {
             for(int x = 1; x < navigationItem; x++)
@@ -240,7 +248,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             else if(id == R.id.main_logout)
             {
-                Toast.makeText(this, "Logout fragment", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent signInIntent = new Intent(this, RegisterActivity.class);
+                startActivity(signInIntent);
+                finish();
             }
             _drawerLayout.closeDrawer(GravityCompat.START);
             return true;

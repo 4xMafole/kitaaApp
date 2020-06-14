@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kitaa.R;
@@ -39,7 +41,6 @@ import java.util.Objects;
 
 import static com.kitaa.startup.MainActivity.SHOW_WISHLIST;
 import static com.kitaa.startup.auth.RegisterActivity._setSignUpFragment;
-import static com.kitaa.startup.database.DBqueries._currentUser;
 
 public class ProductDetailsActivity extends AppCompatActivity
 {
@@ -61,6 +62,7 @@ public class ProductDetailsActivity extends AppCompatActivity
 
     /////Firebase firestore
     private FirebaseFirestore _firestore;
+    private FirebaseUser _currentUser;
     private TextView _productTitle;
     private TextView _productLocation;
     private TextView _productUploadTime;
@@ -104,6 +106,13 @@ public class ProductDetailsActivity extends AppCompatActivity
         detailsTabController();
         authDialog();
         contactProductOwner();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        _currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     private void contactProductOwner()
@@ -202,9 +211,10 @@ public class ProductDetailsActivity extends AppCompatActivity
     {
         _productImages = new ArrayList<>();
         //todo: need to input product Id
-        _firestore.collection("PRODUCTS").document("9lCvxi2xujM5RAF6iJdH").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+        _firestore.collection("PRODUCTS").document(Objects.requireNonNull(getIntent().getStringExtra("PRODUCT_ID"))).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
             @SuppressLint("SetTextI18n")
+
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task)
             {

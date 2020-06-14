@@ -1,5 +1,6 @@
 package com.kitaa.startup;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.kitaa.startup.MainActivity._drawer;
 import static com.kitaa.startup.database.DBqueries._categoryModelList;
 import static com.kitaa.startup.database.DBqueries.lists;
 import static com.kitaa.startup.database.DBqueries.loadCategories;
@@ -85,12 +87,14 @@ public class HomeFragment extends Fragment
         return _view;
     }
 
+    @SuppressLint("WrongConstant")
     private void checkConnection()
     {
         _connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         _networkInfo = Objects.requireNonNull(_connectivityManager).getActiveNetworkInfo();
         if(_networkInfo != null && _networkInfo.isConnected())
         {
+            _drawer.setDrawerLockMode(0);
             _noInternetConnection.setVisibility(View.GONE);
             _networkError.setVisibility(View.GONE);
 
@@ -102,6 +106,7 @@ public class HomeFragment extends Fragment
         }
         else
         {
+            _drawer.setDrawerLockMode(1);
             _categoryRecyclerview.setVisibility(View.GONE);
             _homepageRecyclerview.setVisibility(View.GONE);
 
@@ -118,6 +123,7 @@ public class HomeFragment extends Fragment
 
         _refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
+            @SuppressLint("WrongConstant")
             @Override
             public void onRefresh()
             {
@@ -129,6 +135,7 @@ public class HomeFragment extends Fragment
 
                 if(_networkInfo != null && _networkInfo.isConnected())
                 {
+                    _drawer.setDrawerLockMode(0);
                     _noInternetConnection.setVisibility(View.GONE);
                     _networkError.setVisibility(View.GONE);
 
@@ -150,6 +157,7 @@ public class HomeFragment extends Fragment
                 }
                 else
                 {
+                    _drawer.setDrawerLockMode(1);
                     Glide.with(requireContext()).load(R.drawable.no_internet_connection).into(_noInternetConnection);
                     _categoryRecyclerview.setVisibility(View.GONE);
                     _homepageRecyclerview.setVisibility(View.GONE);
